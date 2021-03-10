@@ -1,0 +1,1181 @@
+swagger: "2.0"
+info:
+  title: beego Test API
+  description: beego has a very cool tools to autogenerate documents for your API
+  version: 1.0.0
+  termsOfService: http://beego.me/
+  contact:
+    email: astaxie@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+basePath: /v1/easy-tutor
+paths:
+  /comment/{comment_id}:
+    get:
+      tags:
+      - comment
+      description: find object by objectid
+      operationId: CommentController.Get
+      parameters:
+      - in: path
+        name: comment_id
+        description: the offerID you want to get
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/responses.Comment'
+        "403":
+          description: :comment_id is empty
+    put:
+      tags:
+      - comment
+      description: update the object
+      operationId: CommentController.Put
+      parameters:
+      - in: header
+        name: token
+        description: The token
+        required: true
+        type: string
+      - in: path
+        name: comment_id
+        description: the comment
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: The body
+        required: true
+        schema:
+          $ref: '#/definitions/requests.CommentPut'
+      responses:
+        "200":
+          description: '{string} success'
+        "403":
+          description: is empty
+    delete:
+      tags:
+      - comment
+      description: delete the object
+      operationId: CommentController.Delete
+      parameters:
+      - in: header
+        name: token
+        description: The token
+        required: true
+        type: string
+      - in: path
+        name: comment_id
+        description: the request_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} success'
+        "403":
+          description: is empty
+  /comment/teacher/{teacher_id}:
+    post:
+      tags:
+      - comment
+      description: find object by objectid
+      operationId: CommentController.PostComment
+      parameters:
+      - in: header
+        name: token
+        description: token of user
+        required: true
+        type: string
+      - in: path
+        name: teacher_id
+        description: the teacher_id you want to comment
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: comment body
+        required: true
+        schema:
+          $ref: '#/definitions/requests.CommentPost'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/responses.Comment'
+        "403":
+          description: :user_id is empty
+  /offer/{offer_id}:
+    get:
+      tags:
+      - offer
+      description: find object by objectid
+      operationId: OfferController.Get
+      parameters:
+      - in: path
+        name: offer_id
+        description: the offerID you want to get
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/responses.Offer'
+        "403":
+          description: :offer_id is empty
+    put:
+      tags:
+      - offer
+      description: update the object
+      operationId: OfferController.Update
+      parameters:
+      - in: header
+        name: token
+        description: The token
+        required: true
+        type: string
+      - in: path
+        name: offer_id
+        description: the offer
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: The body
+        required: true
+        schema:
+          $ref: '#/definitions/requests.OfferPut'
+      responses:
+        "200":
+          description: '{string} success'
+        "403":
+          description: is empty
+    delete:
+      tags:
+      - offer
+      description: delete the object
+      operationId: OfferController.Delete
+      parameters:
+      - in: header
+        name: token
+        description: The token
+        required: true
+        type: string
+      - in: path
+        name: offer_id
+        description: the offer_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} success'
+        "403":
+          description: is empty
+  /request/:
+    get:
+      tags:
+      - request
+      description: create teacher
+      operationId: RequestController.GetPage
+      parameters:
+      - in: query
+        name: page_number
+        description: page number
+        required: true
+        type: integer
+        format: int64
+      - in: query
+        name: page_length
+        description: page length
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: '{string} id'
+        "403":
+          description: body is empty
+    post:
+      tags:
+      - request
+      description: create teacher
+      operationId: RequestController.PostRequest
+      parameters:
+      - in: header
+        name: token
+        description: string
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: The object content
+        required: true
+        schema:
+          $ref: '#/definitions/requests.RequestPost'
+      responses:
+        "200":
+          description: '{string} id'
+        "403":
+          description: body is empty
+  /request/{request_id}:
+    put:
+      tags:
+      - request
+      description: update the object
+      operationId: RequestController.Update
+      parameters:
+      - in: header
+        name: token
+        description: The token
+        required: true
+        type: string
+      - in: path
+        name: request_id
+        description: the request_id
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: The body
+        required: true
+        schema:
+          $ref: '#/definitions/requests.RequestPut'
+      responses:
+        "200":
+          description: '{string} success'
+        "403":
+          description: is empty
+    delete:
+      tags:
+      - request
+      description: delete the object
+      operationId: RequestController.Delete
+      parameters:
+      - in: header
+        name: token
+        description: The token
+        required: true
+        type: string
+      - in: path
+        name: request_id
+        description: the request_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} success'
+        "403":
+          description: is empty
+  /request/{request_id}/offer:
+    get:
+      tags:
+      - request
+      description: get all objects
+      operationId: RequestController.GetPage
+      parameters:
+      - in: path
+        name: request_id
+        description: request id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/responses.Offer'
+        "403":
+          description: is empty
+    post:
+      tags:
+      - request
+      description: create teacher
+      operationId: RequestController.Post
+      parameters:
+      - in: header
+        name: token
+        description: token
+        required: true
+        type: string
+      - in: path
+        name: request_id
+        description: request
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: The object content
+        required: true
+        schema:
+          $ref: '#/definitions/requests.OfferPost'
+      responses:
+        "200":
+          description: '{string} id'
+        "403":
+          description: body is empty
+  /storage/:
+    post:
+      tags:
+      - storage
+      description: create User
+      operationId: StorageController.Post
+      parameters:
+      - in: header
+        name: token
+        description: the token
+        required: true
+        type: string
+      - in: formData
+        name: file
+        description: The file content
+        required: true
+        type: file
+      responses:
+        "200":
+          description: '{string} id'
+        "403":
+          description: body is empty
+  /teacher/:
+    get:
+      tags:
+      - teacher
+      description: get all objects
+      operationId: TeacherController.GetPage
+      parameters:
+      - in: query
+        name: page_number
+        description: page number
+        required: true
+        type: integer
+        format: int64
+      - in: query
+        name: page_length
+        description: page length
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/responses.Teacher'
+        "403":
+          description: is empty
+    put:
+      tags:
+      - teacher
+      description: update the object
+      operationId: TeacherController.Update
+      parameters:
+      - in: header
+        name: token
+        description: The token
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: The body
+        required: true
+        schema:
+          $ref: '#/definitions/requests.TeacherPut'
+      responses:
+        "200":
+          description: '{string} success'
+        "403":
+          description: is empty
+    post:
+      tags:
+      - teacher
+      description: create teacher
+      operationId: TeacherController.Post
+      parameters:
+      - in: body
+        name: body
+        description: The object content
+        required: true
+        schema:
+          $ref: '#/definitions/requests.TeacherPost'
+      responses:
+        "200":
+          description: '{string} id'
+        "403":
+          description: body is empty
+  /teacher/{teacher_id}:
+    get:
+      tags:
+      - teacher
+      description: find object by objectid
+      operationId: TeacherController.Get
+      parameters:
+      - in: path
+        name: teacher_id
+        description: the teacher_id you want to get
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/responses.Teacher'
+        "403":
+          description: :teacher_id is empty
+  /teacher/{teacher_id}/comment:
+    get:
+      tags:
+      - teacher
+      description: find object by objectid
+      operationId: TeacherController.GetComment
+      parameters:
+      - in: path
+        name: teacher_id
+        description: the teacherID you want to get
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/responses.Comment'
+        "403":
+          description: :teacher_id is empty
+  /teacher/login:
+    post:
+      tags:
+      - teacher
+      description: login teacher
+      operationId: TeacherController.Post
+      parameters:
+      - in: body
+        name: body
+        description: The object content
+        required: true
+        schema:
+          $ref: '#/definitions/data.LoginInfo'
+      responses:
+        "200":
+          description: '{string} id'
+        "403":
+          description: body is empty
+  /user/:
+    get:
+      tags:
+      - user
+      description: get all objects
+      operationId: UserController.GetPage
+      parameters:
+      - in: query
+        name: page_number
+        description: page number
+        required: true
+        type: integer
+        format: int64
+      - in: query
+        name: page_length
+        description: page size
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/responses.User'
+        "403":
+          description: is empty
+    put:
+      tags:
+      - user
+      description: update the object
+      operationId: UserController.Update
+      parameters:
+      - in: header
+        name: token
+        description: The token
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: The body
+        required: true
+        schema:
+          $ref: '#/definitions/requests.UserPut'
+      responses:
+        "200":
+          description: '{string} success'
+        "403":
+          description: is empty
+    post:
+      tags:
+      - user
+      description: create User
+      operationId: UserController.Post
+      parameters:
+      - in: body
+        name: body
+        description: The object content
+        required: true
+        schema:
+          $ref: '#/definitions/requests.UserPost'
+      responses:
+        "200":
+          description: '{string} id'
+        "403":
+          description: body is empty
+  /user/{user_id}:
+    get:
+      tags:
+      - user
+      description: find object by objectid
+      operationId: UserController.Get
+      parameters:
+      - in: path
+        name: user_id
+        description: the user_id you want to get
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/responses.User'
+        "403":
+          description: :user_id is empty
+  /user/login:
+    post:
+      tags:
+      - user
+      description: login user
+      operationId: UserController.Post
+      parameters:
+      - in: body
+        name: body
+        description: The object content
+        required: true
+        schema:
+          $ref: '#/definitions/data.LoginInfo'
+      responses:
+        "200":
+          description: '{string} id'
+        "403":
+          description: body is empty
+definitions:
+  data.Comment:
+    title: Comment
+    type: object
+    properties:
+      comment:
+        type: string
+      create_time:
+        type: integer
+        format: int64
+      recommended:
+        type: boolean
+      teacher_id:
+        type: string
+      username:
+        type: string
+  data.CommentInfo:
+    title: CommentInfo
+    type: object
+    properties:
+      comment:
+        type: string
+      recommended:
+        type: boolean
+  data.LoginInfo:
+    title: LoginInfo
+    type: object
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+  data.Offer:
+    title: Offer
+    type: object
+    properties:
+      contact:
+        type: string
+      create_time:
+        type: integer
+        format: int64
+      message:
+        type: string
+      offer_price:
+        type: integer
+        format: int64
+      request_id:
+        type: string
+      teacher_id:
+        type: string
+  data.OfferInfo:
+    title: OfferInfo
+    type: object
+    properties:
+      contact:
+        type: string
+      message:
+        type: string
+      offer_price:
+        type: integer
+        format: int64
+  data.RequestInfo:
+    title: RequestInfo
+    type: object
+    properties:
+      description:
+        type: string
+      duration:
+        type: integer
+        format: int64
+      exact_location:
+        type: string
+      gender:
+        type: string
+      graduation:
+        type: string
+      location:
+        type: integer
+        format: int64
+      method:
+        type: string
+      phone_number:
+        type: string
+      price:
+        type: integer
+        format: int64
+      subject:
+        type: string
+      title:
+        type: string
+  data.Schedule:
+    title: Schedule
+    type: object
+    properties:
+      fri_afternoon:
+        type: boolean
+      fri_morning:
+        type: boolean
+      fri_night:
+        type: boolean
+      monday_afternoon:
+        type: boolean
+      monday_morning:
+        type: boolean
+      monday_night:
+        type: boolean
+      sat_afternoon:
+        type: boolean
+      sat_morning:
+        type: boolean
+      sat_night:
+        type: boolean
+      sun_afternoon:
+        type: boolean
+      sun_morning:
+        type: boolean
+      sun_night:
+        type: boolean
+      thu_afternoon:
+        type: boolean
+      thu_morning:
+        type: boolean
+      thu_night:
+        type: boolean
+      tue_afternoon:
+        type: boolean
+      tue_morning:
+        type: boolean
+      tue_night:
+        type: boolean
+      wed_afternoon:
+        type: boolean
+      wed_morning:
+        type: boolean
+      wed_night:
+        type: boolean
+  data.TeacherInfo:
+    title: TeacherInfo
+    type: object
+    properties:
+      achievement:
+        type: string
+      active:
+        type: boolean
+      avatar:
+        type: string
+      background_image:
+        type: string
+      date_of_birth:
+        type: integer
+        format: int64
+      description:
+        type: string
+      gender:
+        type: string
+      graduation:
+        type: string
+      list_method:
+        type: array
+        items:
+          type: string
+      list_subject:
+        type: array
+        items:
+          type: string
+      location:
+        type: integer
+        format: int64
+      name:
+        type: string
+      topic:
+        type: array
+        items:
+          type: string
+  data.UserInfo:
+    title: UserInfo
+    type: object
+    properties:
+      display_name:
+        type: string
+      email:
+        type: string
+      phone_number:
+        type: string
+  requests.CommentPost:
+    title: CommentPost
+    type: object
+    properties:
+      comment:
+        type: string
+      recommended:
+        type: boolean
+  requests.CommentPut:
+    title: CommentPut
+    type: object
+    properties:
+      comment:
+        type: string
+      recommended:
+        type: boolean
+  requests.OfferPost:
+    title: OfferPost
+    type: object
+    properties:
+      contact:
+        type: string
+      message:
+        type: string
+      offer_price:
+        type: integer
+        format: int64
+  requests.OfferPut:
+    title: OfferPut
+    type: object
+    properties:
+      contact:
+        type: string
+      message:
+        type: string
+      offer_price:
+        type: integer
+        format: int64
+  requests.RequestPost:
+    title: RequestPost
+    type: object
+    properties:
+      description:
+        type: string
+      duration:
+        type: integer
+        format: int64
+      exact_location:
+        type: string
+      fri_afternoon:
+        type: boolean
+      fri_morning:
+        type: boolean
+      fri_night:
+        type: boolean
+      gender:
+        type: string
+      graduation:
+        type: string
+      location:
+        type: integer
+        format: int64
+      method:
+        type: string
+      monday_afternoon:
+        type: boolean
+      monday_morning:
+        type: boolean
+      monday_night:
+        type: boolean
+      phone_number:
+        type: string
+      price:
+        type: integer
+        format: int64
+      sat_afternoon:
+        type: boolean
+      sat_morning:
+        type: boolean
+      sat_night:
+        type: boolean
+      subject:
+        type: string
+      sun_afternoon:
+        type: boolean
+      sun_morning:
+        type: boolean
+      sun_night:
+        type: boolean
+      thu_afternoon:
+        type: boolean
+      thu_morning:
+        type: boolean
+      thu_night:
+        type: boolean
+      title:
+        type: string
+      tue_afternoon:
+        type: boolean
+      tue_morning:
+        type: boolean
+      tue_night:
+        type: boolean
+      wed_afternoon:
+        type: boolean
+      wed_morning:
+        type: boolean
+      wed_night:
+        type: boolean
+  requests.RequestPut:
+    title: RequestPut
+    type: object
+    properties:
+      description:
+        type: string
+      duration:
+        type: integer
+        format: int64
+      exact_location:
+        type: string
+      fri_afternoon:
+        type: boolean
+      fri_morning:
+        type: boolean
+      fri_night:
+        type: boolean
+      gender:
+        type: string
+      graduation:
+        type: string
+      location:
+        type: integer
+        format: int64
+      method:
+        type: string
+      monday_afternoon:
+        type: boolean
+      monday_morning:
+        type: boolean
+      monday_night:
+        type: boolean
+      phone_number:
+        type: string
+      price:
+        type: integer
+        format: int64
+      sat_afternoon:
+        type: boolean
+      sat_morning:
+        type: boolean
+      sat_night:
+        type: boolean
+      subject:
+        type: string
+      sun_afternoon:
+        type: boolean
+      sun_morning:
+        type: boolean
+      sun_night:
+        type: boolean
+      thu_afternoon:
+        type: boolean
+      thu_morning:
+        type: boolean
+      thu_night:
+        type: boolean
+      title:
+        type: string
+      tue_afternoon:
+        type: boolean
+      tue_morning:
+        type: boolean
+      tue_night:
+        type: boolean
+      wed_afternoon:
+        type: boolean
+      wed_morning:
+        type: boolean
+      wed_night:
+        type: boolean
+  requests.TeacherPost:
+    title: TeacherPost
+    type: object
+    properties:
+      achievement:
+        type: string
+      active:
+        type: boolean
+      avatar:
+        type: string
+      background_image:
+        type: string
+      date_of_birth:
+        type: integer
+        format: int64
+      description:
+        type: string
+      gender:
+        type: string
+      graduation:
+        type: string
+      list_method:
+        type: array
+        items:
+          type: string
+      list_subject:
+        type: array
+        items:
+          type: string
+      location:
+        type: integer
+        format: int64
+      name:
+        type: string
+      password:
+        type: string
+      topic:
+        type: array
+        items:
+          type: string
+      username:
+        type: string
+  requests.TeacherPut:
+    title: TeacherPut
+    type: object
+    properties:
+      achievement:
+        type: string
+      active:
+        type: boolean
+      avatar:
+        type: string
+      background_image:
+        type: string
+      date_of_birth:
+        type: integer
+        format: int64
+      description:
+        type: string
+      gender:
+        type: string
+      graduation:
+        type: string
+      list_method:
+        type: array
+        items:
+          type: string
+      list_subject:
+        type: array
+        items:
+          type: string
+      location:
+        type: integer
+        format: int64
+      name:
+        type: string
+      topic:
+        type: array
+        items:
+          type: string
+  requests.UserPost:
+    title: UserPost
+    type: object
+    properties:
+      display_name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      phone_number:
+        type: string
+      username:
+        type: string
+  requests.UserPut:
+    title: UserPut
+    type: object
+    properties:
+      display_name:
+        type: string
+      email:
+        type: string
+      phone_number:
+        type: string
+  responses.Comment:
+    title: Comment
+    type: object
+    properties:
+      comment:
+        type: string
+      create_time:
+        type: integer
+        format: int64
+      id:
+        type: string
+      recommended:
+        type: boolean
+      teacher_id:
+        type: string
+      username:
+        type: string
+  responses.Offer:
+    title: Offer
+    type: object
+    properties:
+      contact:
+        type: string
+      create_time:
+        type: integer
+        format: int64
+      id:
+        type: string
+      message:
+        type: string
+      offer_price:
+        type: integer
+        format: int64
+      request_id:
+        type: string
+      teacher_id:
+        type: string
+  responses.Teacher:
+    title: Teacher
+    type: object
+    properties:
+      achievement:
+        type: string
+      active:
+        type: boolean
+      avatar:
+        type: string
+      background_image:
+        type: string
+      date_of_birth:
+        type: integer
+        format: int64
+      description:
+        type: string
+      fri_afternoon:
+        type: boolean
+      fri_morning:
+        type: boolean
+      fri_night:
+        type: boolean
+      gender:
+        type: string
+      graduation:
+        type: string
+      list_method:
+        type: array
+        items:
+          type: string
+      list_subject:
+        type: array
+        items:
+          type: string
+      location:
+        type: integer
+        format: int64
+      monday_afternoon:
+        type: boolean
+      monday_morning:
+        type: boolean
+      monday_night:
+        type: boolean
+      name:
+        type: string
+      sat_afternoon:
+        type: boolean
+      sat_morning:
+        type: boolean
+      sat_night:
+        type: boolean
+      sun_afternoon:
+        type: boolean
+      sun_morning:
+        type: boolean
+      sun_night:
+        type: boolean
+      thu_afternoon:
+        type: boolean
+      thu_morning:
+        type: boolean
+      thu_night:
+        type: boolean
+      topic:
+        type: array
+        items:
+          type: string
+      tue_afternoon:
+        type: boolean
+      tue_morning:
+        type: boolean
+      tue_night:
+        type: boolean
+      username:
+        type: string
+      wed_afternoon:
+        type: boolean
+      wed_morning:
+        type: boolean
+      wed_night:
+        type: boolean
+  responses.User:
+    title: User
+    type: object
+    properties:
+      display_name:
+        type: string
+      email:
+        type: string
+      phone_number:
+        type: string
+      username:
+        type: string
+tags:
+- name: user
+  description: |
+    Operations about Users
+- name: comment
+  description: |
+    Operations about comment
+- name: request
+  description: |
+    Operations about request
+- name: teacher
+  description: |
+    Operations about user
+- name: offer
+  description: |
+    Operations about offer
+- name: storage
+  description: |
+    Operations about storage
