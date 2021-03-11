@@ -6,7 +6,7 @@ import (
 	"EasyTutor/utils/myerror"
 )
 
-func (t *UserHandler) RemoveOne(username string) error {
+func (t *userHandler) RemoveOne(username string) error {
 	user := &models.User{}
 	user.Username = username
 	err := user.Get()

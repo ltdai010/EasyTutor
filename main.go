@@ -2,7 +2,6 @@ package main
 
 import (
 	_ "EasyTutor/routers"
-
 	beego "github.com/beego/beego/v2/server/web"
 )
 

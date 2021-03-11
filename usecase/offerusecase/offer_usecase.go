@@ -14,7 +14,7 @@ type OfferInterface interface {
 }
 
 func GetOfferUseCase() OfferInterface {
-	return &OfferHandler{}
+	return &offerHandler{}
 }
 
-type OfferHandler struct {}
+type offerHandler struct {}

@@ -7,7 +7,7 @@ import (
 	"EasyTutor/utils/myerror"
 )
 
-func (t *CommentHandler) UpdateOne(username, id string, put requests.CommentPut) error {
+func (t *commentHandler) UpdateOne(username, id string, put requests.CommentPut) error {
 	comment := &models.Comment{}
 	comment.ID = id
 	err := comment.Get()

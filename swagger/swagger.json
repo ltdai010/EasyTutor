@@ -15,6 +15,115 @@
     },
     "basePath": "/v1/easy-tutor",
     "paths": {
+        "/admin/login": {
+            "post": {
+                "tags": [
+                    "admin"
+                ],
+                "description": "login teacher",
+                "operationId": "AdminController.Login",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The object content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/data.LoginInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string} id"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/admin/unactivated-teacher": {
+            "get": {
+                "tags": [
+                    "admin"
+                ],
+                "description": "get all objects",
+                "operationId": "AdminController.GetPage",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "admin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page_number",
+                        "description": "page number",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page_length",
+                        "description": "page length",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/responses.Teacher"
+                        }
+                    },
+                    "403": {
+                        "description": "is empty"
+                    }
+                }
+            }
+        },
+        "/admin/unactivated-teacher/{teacher_id}": {
+            "put": {
+                "tags": [
+                    "admin"
+                ],
+                "description": "get all objects",
+                "operationId": "AdminController.ActiveUser",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "admin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "teacher_id",
+                        "description": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/responses.Teacher"
+                        }
+                    },
+                    "403": {
+                        "description": "is empty"
+                    }
+                }
+            }
+        },
         "/comment/teacher/{teacher_id}": {
             "post": {
                 "tags": [
@@ -328,6 +437,39 @@
                 }
             }
         },
+        "/request/accepted-offer/{offer_id}": {
+            "put": {
+                "tags": [
+                    "request"
+                ],
+                "description": "create teacher",
+                "operationId": "RequestController.AcceptOffer",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "string",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "offer_id",
+                        "description": "The offer id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string} id"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
         "/request/{request_id}": {
             "put": {
                 "tags": [
@@ -369,6 +511,39 @@
                     }
                 }
             },
+            "delete": {
+                "tags": [
+                    "request"
+                ],
+                "description": "delete the object",
+                "operationId": "RequestController.Delete",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "The token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "request_id",
+                        "description": "the request_id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string} success"
+                    },
+                    "403": {
+                        "description": "is empty"
+                    }
+                }
+            }
+        },
+        "/request/{request_id}/accepted-offer": {
             "delete": {
                 "tags": [
                     "request"
@@ -466,6 +641,144 @@
                     },
                     "403": {
                         "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/search/request": {
+            "get": {
+                "tags": [
+                    "search"
+                ],
+                "description": "get all request",
+                "operationId": "SearchController.SearchRequest",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page_number",
+                        "description": "page number",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page_length",
+                        "description": "page length",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "key",
+                        "description": "key",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "gender",
+                        "description": "gender",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "location",
+                        "description": "location",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "graduation",
+                        "description": "graduation",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "subject",
+                        "description": "subject",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/responses.Teacher"
+                        }
+                    },
+                    "403": {
+                        "description": "is empty"
+                    }
+                }
+            }
+        },
+        "/search/teacher": {
+            "get": {
+                "tags": [
+                    "search"
+                ],
+                "description": "get all objects",
+                "operationId": "SearchController.SearchTeacher",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page_number",
+                        "description": "page number",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page_length",
+                        "description": "page length",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "key",
+                        "description": "key",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "gender",
+                        "description": "gender",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "location",
+                        "description": "location",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "graduation",
+                        "description": "graduation",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "subject",
+                        "description": "subject",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/responses.Teacher"
+                        }
+                    },
+                    "403": {
+                        "description": "is empty"
                     }
                 }
             }
@@ -606,7 +919,7 @@
                     "teacher"
                 ],
                 "description": "login teacher",
-                "operationId": "TeacherController.Post",
+                "operationId": "TeacherController.Login",
                 "parameters": [
                     {
                         "in": "body",
@@ -1048,9 +1361,6 @@
                 "achievement": {
                     "type": "string"
                 },
-                "active": {
-                    "type": "boolean"
-                },
                 "avatar": {
                     "type": "string"
                 },
@@ -1385,9 +1695,6 @@
                 "achievement": {
                     "type": "string"
                 },
-                "active": {
-                    "type": "boolean"
-                },
                 "avatar": {
                     "type": "string"
                 },
@@ -1446,9 +1753,6 @@
             "properties": {
                 "achievement": {
                     "type": "string"
-                },
-                "active": {
-                    "type": "boolean"
                 },
                 "avatar": {
                     "type": "string"
@@ -1592,9 +1896,6 @@
             "properties": {
                 "achievement": {
                     "type": "string"
-                },
-                "active": {
-                    "type": "boolean"
                 },
                 "avatar": {
                     "type": "string"
@@ -1751,6 +2052,14 @@
         {
             "name": "storage",
             "description": "Operations about storage\n"
+        },
+        {
+            "name": "search",
+            "description": "Operations about search\n"
+        },
+        {
+            "name": "admin",
+            "description": "Operations about admin\n"
         }
     ]
 }

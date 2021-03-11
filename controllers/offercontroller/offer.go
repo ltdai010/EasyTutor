@@ -15,6 +15,8 @@ type OfferController struct {
 	web.Controller
 }
 
+
+
 // @Title Get
 // @Description find object by objectid
 // @Param	offer_id		path 	string	true		"the offerID you want to get"

@@ -6,7 +6,7 @@ import (
 	"EasyTutor/models"
 )
 
-func (t *CommentHandler) GetOne(id string) (*responses.Comment, error) {
+func (t *commentHandler) GetOne(id string) (*responses.Comment, error) {
 	comment := &models.Comment{}
 	comment.ID = id
 	err := comment.Get()
@@ -19,7 +19,7 @@ func (t *CommentHandler) GetOne(id string) (*responses.Comment, error) {
 	}, data.Success
 }
 
-func (t *CommentHandler) GetCommentOfTeacher(teacherID string) ([]*responses.Comment, error) {
+func (t *commentHandler) GetCommentOfTeacher(teacherID string) ([]*responses.Comment, error) {
 	comment := &models.Comment{}
 	listComment, err := comment.GetCommentOfTeacher(teacherID)
 	if err != nil {

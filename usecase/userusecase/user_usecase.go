@@ -16,7 +16,7 @@ type UserInterface interface {
 }
 
 func GetUserUseCase() UserInterface {
-	return &UserHandler{}
+	return &userHandler{}
 }
 
-type UserHandler struct {}
+type userHandler struct {}

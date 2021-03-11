@@ -7,7 +7,7 @@ import (
 	"EasyTutor/utils/myerror"
 )
 
-func (t *TeacherHandler) UpdateOne(username string, request requests.TeacherPut) error {
+func (t *teacherHandler) UpdateOne(username string, request requests.TeacherPut) error {
 	teacher := &models.Teacher{}
 	teacher.Username = username
 	err := teacher.Get()

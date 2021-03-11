@@ -21,5 +21,6 @@ func init() {
 	web.InsertFilter("/v1/easy-tutor/comment/*", web.BeforeRouter, filterComment)
 	web.InsertFilter("/v1/easy-tutor/offer/*", web.BeforeRouter, filterOffer)
 	web.InsertFilter("/v1/easy-tutor/request/*", web.BeforeRouter, filterRequest)
+	web.InsertFilter("/v1/easy-tutor/admin/*", web.BeforeRouter, filterAdmin)
 
 }

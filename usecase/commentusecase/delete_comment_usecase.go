@@ -6,7 +6,7 @@ import (
 	"EasyTutor/utils/myerror"
 )
 
-func (t *CommentHandler) RemoveOne(username, id string) error {
+func (t *commentHandler) RemoveOne(username, id string) error {
 	comment := &models.Comment{}
 	comment.ID = id
 	err := comment.Get()

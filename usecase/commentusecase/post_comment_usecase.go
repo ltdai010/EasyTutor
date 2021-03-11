@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func (t *CommentHandler) CreateOne(username, teacherID string, post requests.CommentPost) (string, error) {
+func (t *commentHandler) CreateOne(username, teacherID string, post requests.CommentPost) (string, error) {
 	//var
 	comment := &models.Comment{}
 	user := &models.User{}

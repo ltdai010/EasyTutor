@@ -8,7 +8,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (t *TeacherHandler) CreateOne(request requests.TeacherPost) (string, error) {
+func (t *teacherHandler) CreateOne(request requests.TeacherPost) (string, error) {
 	teacher := &models.Teacher{}
 
 	teacher.Username = request.Username
@@ -27,6 +27,7 @@ func (t *TeacherHandler) CreateOne(request requests.TeacherPost) (string, error)
 		Password: string(hashed),
 	}
 	teacher.TeacherInfo, err = data.SetDataTeacher(request.TeacherInfo)
+	teacher.Active = false
 	if err != nil {
 		return "", data.BadRequest
 	}
@@ -62,13 +63,17 @@ func (t *TeacherHandler) CreateOne(request requests.TeacherPost) (string, error)
 	return id, data.Success
 }
 
-func (t *TeacherHandler) Login(login data.LoginInfo) (string, error) {
+func (t *teacherHandler) Login(login data.LoginInfo) (string, error) {
 	teacher := &models.Teacher{}
 	teacher.Username = login.Username
 
 	err := teacher.Get()
 	if err != nil {
 		return "", data.NotExisted
+	}
+
+	if !teacher.Active {
+		return "", data.NotPermission
 	}
 
 	if err = bcrypt.CompareHashAndPassword([]byte(teacher.Password), []byte(login.Password)); err != nil {

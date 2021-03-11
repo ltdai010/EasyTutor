@@ -8,6 +8,8 @@ import (
 	"EasyTutor/drivers"
 	"cloud.google.com/go/firestore"
 	"context"
+	"fmt"
+	"github.com/algolia/algoliasearch-client-go/v3/algolia/opt"
 	"github.com/algolia/algoliasearch-client-go/v3/algolia/search"
 	"log"
 )
@@ -112,4 +114,54 @@ func (t *Request) GetPage(pageNumber int, pageSize int) ([]*responses.Request, i
 		res = append(res, &request)
 	}
 	return res, total, err
+}
+
+func (t *Request) Search(key string, location, pageNumber, pageSize int,
+	graduation data.Graduation, subject data.Subject, gender data.Gender) ([]*responses.RequestSearch, error) {
+	res := []*responses.RequestSearch{}
+	filters := ""
+	if location > 0 {
+		filters += "location:'" + fmt.Sprint(location) + "'"
+	}
+	if graduation != "" {
+		if filters != "" {
+			filters += " AND "
+		}
+		filters += "graduation:'" + string(graduation) + "'"
+	}
+	if subject != "" {
+		if filters != "" {
+			filters += " AND "
+		}
+		filters += "subject:'" + string(subject) + "'"
+	}
+	if gender != "" {
+		if filters != "" {
+			filters += " AND "
+		}
+		filters += "gender:'" + string(gender) + "'"
+	}
+
+	log.Println(filters)
+
+	searchResult, err := t.GetSearchIndex().Search(key,
+		opt.Filters(filters),
+		opt.Page(pageNumber),
+		opt.HitsPerPage(pageSize),
+	)
+	if err != nil || len(searchResult.Hits) == 0{
+		return nil, data.NotMore
+	}
+	result := []*searchdata.RequestSearch{}
+	err = searchResult.UnmarshalHits(&result)
+	if err != nil {
+		return nil, err
+	}
+	for _, i := range result {
+		res = append(res, &responses.RequestSearch{
+			ID:    i.ObjectID,
+			RequestInfo: i.RequestInfo,
+		})
+	}
+	return res, nil
 }

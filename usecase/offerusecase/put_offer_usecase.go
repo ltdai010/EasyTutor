@@ -7,12 +7,23 @@ import (
 	"EasyTutor/utils/myerror"
 )
 
-func (t *OfferHandler) UpdateOne(username, id string, put requests.OfferPut) error {
+func (t *offerHandler) UpdateOne(username, id string, put requests.OfferPut) error {
 	offer := &models.Offer{}
+	request := &models.Request{}
+
 	offer.ID = id
 	err := offer.Get()
 	if myerror.IsError(err) {
 		return data.NotExisted
+	}
+	request.ID = offer.RequestID
+	err = request.Get()
+	if err != nil {
+		return data.NotExisted
+	}
+
+	if request.AcceptOffer == id {
+		return data.NotPermission
 	}
 
 	if offer.TeacherID != username {

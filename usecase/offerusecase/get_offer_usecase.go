@@ -6,7 +6,7 @@ import (
 	"EasyTutor/models"
 )
 
-func (t *OfferHandler) GetOne(id string) (*responses.Offer, error) {
+func (t *offerHandler) GetOne(id string) (*responses.Offer, error) {
 	offer := &models.Offer{}
 	offer.ID = id
 	err := offer.Get()
@@ -19,7 +19,7 @@ func (t *OfferHandler) GetOne(id string) (*responses.Offer, error) {
 	}, data.Success
 }
 
-func (t *OfferHandler) GetOfferOfRequest(requestID string) ([]*responses.Offer, error) {
+func (t *offerHandler) GetOfferOfRequest(requestID string) ([]*responses.Offer, error) {
 	offer := &models.Offer{}
 	listOffer, err := offer.GetOfferOfRequest(requestID)
 	if err != nil {

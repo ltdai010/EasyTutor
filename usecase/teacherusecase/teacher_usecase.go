@@ -16,7 +16,7 @@ type TeacherInterface interface {
 }
 
 func GetTeacherUseCase() TeacherInterface {
-	return &TeacherHandler{}
+	return &teacherHandler{}
 }
 
-type TeacherHandler struct {}
+type teacherHandler struct {}

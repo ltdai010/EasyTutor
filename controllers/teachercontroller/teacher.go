@@ -133,7 +133,7 @@ func (o *TeacherController) GetComment() {
 	o.ServeJSON()
 }
 
-// @Title Post
+// @Title Login
 // @Description login teacher
 // @Param	body		body 	data.LoginInfo	true		"The object content"
 // @Success 200 {string} id

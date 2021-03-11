@@ -91,6 +91,27 @@ func (o *RequestController) PostRequest() {
 	o.ServeJSON()
 }
 
+// @Title AcceptOffer
+// @Description create teacher
+// @Param	token		header	string	true		"string"
+// @Param	offer_id	path 	string	true		"The offer id"
+// @Success 200 {string} id
+// @Failure 403 body is empty
+// @router /accepted-offer/:offer_id [put]
+func (o *RequestController) AcceptOffer() {
+	username := o.Ctx.Input.Header("username")
+	offerID := o.GetString(":offer_id")
+	err := requestusecase.GetRequestUseCase().AcceptOffer(username, offerID)
+	if myerror.IsError(err) {
+		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
+		return
+	}
+	o.Data["json"] = responses.ResponseBool{
+		Data: true,
+	}
+	o.ServeJSON()
+}
+
 
 // @Title GetPage
 // @Description create teacher
@@ -160,6 +181,33 @@ func (o *RequestController) Delete() {
 	}
 
 	err := requestusecase.GetRequestUseCase().RemoveOne(username, requestID)
+	if myerror.IsError(err) {
+		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
+		return
+	}
+	o.Data["json"] = responses.ResponseBool{
+		Data:       true,
+	}
+	o.ServeJSON()
+}
+
+// @Title Delete
+// @Description delete the object
+// @Param	token		header 	string				true		"The token"
+// @Param	request_id	path	string				true		"the request_id"
+// @Success 200 {string} success
+// @Failure 403  is empty
+// @router /:request_id/accepted-offer [delete]
+func (o *RequestController) DeleteOffer() {
+	username := o.Ctx.Input.Header("username")
+	requestID := o.GetString(":request_id")
+
+	if username == "" || requestID == "" {
+		o.Ctx.Output.SetStatus(400)
+		return
+	}
+
+	err := requestusecase.GetRequestUseCase().DeclineOffer(username, requestID)
 	if myerror.IsError(err) {
 		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
 		return

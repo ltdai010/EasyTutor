@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func (t *OfferHandler) CreateOne(teacherID, requestID string, post requests.OfferPost) (string, error) {
+func (t *offerHandler) CreateOne(teacherID, requestID string, post requests.OfferPost) (string, error) {
 	offer := &models.Offer{}
 	teacher := &models.Teacher{}
 	request := &models.Request{}
@@ -20,7 +20,7 @@ func (t *OfferHandler) CreateOne(teacherID, requestID string, post requests.Offe
 
 	request.ID = requestID
 	err = request.Get()
-	if err != nil {
+	if err != nil || request.AcceptOffer != "" {
 		return "", data.NotExisted
 	}
 

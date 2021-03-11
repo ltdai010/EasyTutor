@@ -6,7 +6,7 @@ import (
 	"EasyTutor/models"
 )
 
-func (t *TeacherHandler) GetOne(username string) (*responses.Teacher, error) {
+func (t *teacherHandler) GetOne(username string) (*responses.Teacher, error) {
 	teacher := &models.Teacher{}
 	teacher.Username = username
 	err := teacher.Get()
@@ -19,9 +19,9 @@ func (t *TeacherHandler) GetOne(username string) (*responses.Teacher, error) {
 	}, data.Success
 }
 
-func (t *TeacherHandler) GetPage(pageNumber int, pageSize int) ([]*responses.Teacher, int, error) {
+func (t *teacherHandler) GetPage(pageNumber int, pageSize int) ([]*responses.Teacher, int, error) {
 	teacher := &models.Teacher{}
-	listTeacher, total, err := teacher.GetPage(pageNumber - 1, pageSize)
+	listTeacher, total, err := teacher.GetPageActive(pageNumber - 1, pageSize)
 	if err != nil {
 		return nil, 0, data.NotMore
 	}

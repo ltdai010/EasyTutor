@@ -5,23 +5,23 @@ import (
 )
 
 type TeacherInfo struct {
-	Name            string           `json:"name"`
-	ListSubject     []string		 `json:"list_subject"`
-	Location        int              `json:"location"`
-	ListMethod      []string		 `json:"list_method"`
-	Description     string           `json:"description"`
-	Achievement     string           `json:"achievement"`
-	Topic           []string         `json:"topic"`
-	BackgroundImage string           `json:"background_image"`
-	Avatar          string           `json:"avatar"`
-	Gender          string           `json:"gender"`
-	DateOfBirth     int64            `json:"date_of_birth"`
-	Graduation      string	         `json:"graduation"`
-	Active		    bool			 `json:"active"`
+	Name            string   `json:"name"`
+	ListSubject     []string `json:"list_subject"`
+	Location        int      `json:"location"`
+	ListMethod      []string `json:"list_method"`
+	Description     string   `json:"description"`
+	Achievement     string   `json:"achievement"`
+	Topic           []string `json:"topic"`
+	BackgroundImage string   `json:"background_image"`
+	Avatar          string   `json:"avatar"`
+	Gender          string   `json:"gender"`
+	DateOfBirth     int64    `json:"date_of_birth"`
+	Graduation      string   `json:"graduation"`
 }
 
 type Teacher struct {
 	LoginInfo
+	Active          bool     `json:"active"`
 	TeacherInfo
 	Schedule
 }
@@ -40,7 +40,6 @@ func SetDataTeacher(request TeacherInfo) (TeacherInfo, error) {
 		Gender:          request.Gender,
 		DateOfBirth:     request.DateOfBirth,
 		Graduation:      request.Graduation,
-		Active:          false,
 	}
 	if NewGender(request.Gender) == "" {
 		return TeacherInfo{}, BadRequest

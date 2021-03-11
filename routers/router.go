@@ -8,9 +8,11 @@
 package routers
 
 import (
+	"EasyTutor/controllers/admincontroller"
 	"EasyTutor/controllers/commentcontroller"
 	"EasyTutor/controllers/offercontroller"
 	"EasyTutor/controllers/requestcontroller"
+	"EasyTutor/controllers/searchcontroller"
 	"EasyTutor/controllers/storagecontroller"
 	"EasyTutor/controllers/teachercontroller"
 	"EasyTutor/controllers/usercontroller"
@@ -48,6 +50,16 @@ func init() {
 		beego.NSNamespace("/storage",
 			beego.NSInclude(
 				&storagecontroller.StorageController{},
+			),
+		),
+		beego.NSNamespace("/search",
+			beego.NSInclude(
+				&searchcontroller.SearchController{},
+			),
+		),
+		beego.NSNamespace("/admin",
+			beego.NSInclude(
+				&admincontroller.AdminController{},
 			),
 		),
 	)

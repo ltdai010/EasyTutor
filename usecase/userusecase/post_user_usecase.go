@@ -9,7 +9,7 @@ import (
 	"log"
 )
 
-func (t *UserHandler) CreateOne(request requests.UserPost) (string, error) {
+func (t *userHandler) CreateOne(request requests.UserPost) (string, error) {
 	user := &models.User{}
 
 	user.Username = request.Username
@@ -40,7 +40,7 @@ func (t *UserHandler) CreateOne(request requests.UserPost) (string, error) {
 	return id, data.Success
 }
 
-func (t *UserHandler) Login(login data.LoginInfo) (string, error) {
+func (t *userHandler) Login(login data.LoginInfo) (string, error) {
 	user := &models.User{}
 	log.Println(login)
 	user.Username = login.Username

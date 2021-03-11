@@ -11,10 +11,12 @@ type RequestInterface interface {
 	GetOne(id string) (*responses.Request, error)
 	UpdateOne(username, id string, put requests.RequestPut) error
 	RemoveOne(username, id string) error
+	AcceptOffer(username, offerID string) error
+	DeclineOffer(username, requestID string) error
 }
 
 func GetRequestUseCase() RequestInterface {
-	return &RequestHandler{}
+	return &requestHandler{}
 }
 
-type RequestHandler struct {}
+type requestHandler struct {}

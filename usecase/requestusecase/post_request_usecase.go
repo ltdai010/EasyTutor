@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func (t *RequestHandler) CreateOne(username string, post requests.RequestPost) (string, error) {
+func (t *requestHandler) CreateOne(username string, post requests.RequestPost) (string, error) {
 	request := &models.Request{}
 
 	if !data.DataRequestIsValid(post.RequestInfo) {

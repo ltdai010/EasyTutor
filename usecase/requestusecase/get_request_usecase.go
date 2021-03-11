@@ -6,7 +6,7 @@ import (
 	"EasyTutor/models"
 )
 
-func (t *RequestHandler) GetOne(id string) (*responses.Request, error) {
+func (t *requestHandler) GetOne(id string) (*responses.Request, error) {
 	request := &models.Request{}
 	request.ID = id
 	err := request.Get()
@@ -19,7 +19,7 @@ func (t *RequestHandler) GetOne(id string) (*responses.Request, error) {
 	}, data.Success
 }
 
-func (t *RequestHandler) GetPage(pageNumber int, pageSize int) ([]*responses.Request, int, error) {
+func (t *requestHandler) GetPage(pageNumber int, pageSize int) ([]*responses.Request, int, error) {
 	request := &models.Request{}
 	listRequest, total, err := request.GetPage(pageNumber - 1, pageSize)
 	if err != nil {

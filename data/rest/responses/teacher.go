@@ -7,3 +7,8 @@ type Teacher struct {
 	data.TeacherInfo
 	data.Schedule
 }
+
+type TeacherSearch struct {
+	Username string	`json:"username"`
+	data.TeacherInfo
+}

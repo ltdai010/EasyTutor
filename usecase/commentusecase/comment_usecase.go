@@ -14,7 +14,7 @@ type CommentInterface interface {
 }
 
 func GetCommentUseCase() CommentInterface {
-	return &CommentHandler{}
+	return &commentHandler{}
 }
 
-type CommentHandler struct {}
+type commentHandler struct {}
