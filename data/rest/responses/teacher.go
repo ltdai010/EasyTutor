@@ -11,4 +11,5 @@ type Teacher struct {
 type TeacherSearch struct {
 	Username string	`json:"username"`
 	data.TeacherInfo
+	data.Schedule
 }

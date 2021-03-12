@@ -4,6 +4,7 @@ import (
 	"EasyTutor/data/data"
 	"EasyTutor/middlerware"
 	"EasyTutor/models"
+	"EasyTutor/utils/logger"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -19,21 +20,6 @@ func (a *adminHandler) Login(request data.LoginInfo) (string, error) {
 		return "", data.NotPermission
 	}
 
+	logger.Info("[Admin Login] admin login admin_id = %v", request.Username)
 	return middlerware.GenerateToken(request.Username, "admin")
-}
-
-func (a *adminHandler) ValidateTeacher(teacherID string) error {
-	teacher := &models.Teacher{}
-	teacher.Username = teacherID
-	err := teacher.Get()
-	if err != nil {
-		return data.NotExisted
-	}
-
-	teacher.Active = true
-	err = teacher.Update()
-	if err != nil {
-		return data.ErrSystem
-	}
-	return data.Success
 }

@@ -4,6 +4,7 @@ import (
 	"EasyTutor/data/data"
 	"EasyTutor/data/rest/requests"
 	"EasyTutor/models"
+	"EasyTutor/utils/datastruct"
 	"time"
 )
 
@@ -23,6 +24,11 @@ func (t *commentHandler) CreateOne(username, teacherID string, post requests.Com
 	err = teacher.Get()
 	if err != nil {
 		return "", data.NotExisted
+	}
+
+	userMap := datastruct.ArrayToMapIString(teacher.User)
+	if _, ok := userMap[username]; !ok {
+		return "", data.NotPermission
 	}
 
 	comment.TeacherID = teacherID

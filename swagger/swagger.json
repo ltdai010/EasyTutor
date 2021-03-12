@@ -543,32 +543,28 @@
                 }
             }
         },
-        "/request/{request_id}/accepted-offer": {
-            "delete": {
+        "/request/{request_id}/available-teacher": {
+            "get": {
                 "tags": [
                     "request"
                 ],
-                "description": "delete the object",
-                "operationId": "RequestController.Delete",
+                "description": "get all objects",
+                "operationId": "RequestController.GetAvailableTeacher",
                 "parameters": [
-                    {
-                        "in": "header",
-                        "name": "token",
-                        "description": "The token",
-                        "required": true,
-                        "type": "string"
-                    },
                     {
                         "in": "path",
                         "name": "request_id",
-                        "description": "the request_id",
+                        "description": "request id",
                         "required": true,
                         "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "{string} success"
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/responses.Teacher"
+                        }
                     },
                     "403": {
                         "description": "is empty"
@@ -699,6 +695,12 @@
                         "name": "subject",
                         "description": "subject",
                         "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "method",
+                        "description": "method",
+                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -767,6 +769,12 @@
                         "in": "query",
                         "name": "subject",
                         "description": "subject",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "method",
+                        "description": "method",
                         "type": "string"
                     }
                 ],
@@ -1374,6 +1382,9 @@
                 "description": {
                     "type": "string"
                 },
+                "email": {
+                    "type": "string"
+                },
                 "gender": {
                     "type": "string"
                 },
@@ -1708,6 +1719,9 @@
                 "description": {
                     "type": "string"
                 },
+                "email": {
+                    "type": "string"
+                },
                 "gender": {
                     "type": "string"
                 },
@@ -1765,6 +1779,9 @@
                     "format": "int64"
                 },
                 "description": {
+                    "type": "string"
+                },
+                "email": {
                     "type": "string"
                 },
                 "gender": {
@@ -1908,6 +1925,9 @@
                     "format": "int64"
                 },
                 "description": {
+                    "type": "string"
+                },
+                "email": {
                     "type": "string"
                 },
                 "fri_afternoon": {

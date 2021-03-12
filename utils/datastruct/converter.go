@@ -1,4 +1,4 @@
-package structdata
+package datastruct
 
 func MapIStringToArray(data map[string]bool) []string {
 	res := []string{}

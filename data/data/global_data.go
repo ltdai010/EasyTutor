@@ -138,3 +138,10 @@ func NewGraduation(sGraduation string) Graduation {
 		return ""
 	}
 }
+
+type Status string
+
+const (
+	Open = "open"
+	Close = "close"
+)

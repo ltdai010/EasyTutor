@@ -38,6 +38,7 @@ func (t *Teacher) Add() (string, error) {
 	_, err = t.GetSearchIndex().SaveObject(searchdata.TeacherSearch{
 		ObjectID:    t.Username,
 		TeacherInfo: t.TeacherInfo,
+		Schedule:	 t.Schedule,
 	})
 	if err != nil {
 		log.Println(err, " error create data search teacher")
@@ -65,6 +66,7 @@ func (t *Teacher) Update() error {
 	_, err = t.GetSearchIndex().SaveObject(searchdata.TeacherSearch{
 		ObjectID:    t.Username,
 		TeacherInfo: t.TeacherInfo,
+		Schedule:    t.Schedule,
 	})
 	if err != nil {
 		log.Println(err, " error update data search teacher")
@@ -139,8 +141,10 @@ func (t *Teacher) GetPageUnActive(pageNumber int, pageSize int) ([]*responses.Te
 }
 
 func (t *Teacher) Search(key string, location, pageNumber, pageSize int,
-	graduation data.Graduation, subject data.Subject, gender data.Gender) ([]*responses.TeacherSearch, error) {
+	graduation data.Graduation, subject data.Subject, gender data.Gender, method data.Method) ([]*responses.TeacherSearch, error) {
 	res := []*responses.TeacherSearch{}
+	searchResult := search.QueryRes{}
+	var err error
 	filters := ""
 	if location > 0 {
 		filters += "location:'" + fmt.Sprint(location) + "'"
@@ -163,12 +167,26 @@ func (t *Teacher) Search(key string, location, pageNumber, pageSize int,
 		}
 		filters += "gender:'" + string(gender) + "'"
 	}
+	if method != "" {
+		if filters != "" {
+			filters += " AND "
+		}
+		filters += "list_method:'" + string(method) + "'"
+	}
 
-	searchResult, err := t.GetSearchIndex().Search(key,
-		opt.Filters(filters),
-		opt.Page(pageNumber),
-		opt.HitsPerPage(pageSize),
-	)
+	log.Println(filters)
+
+	if pageNumber >= 0 && pageSize > 0 {
+		searchResult, err = t.GetSearchIndex().Search(key,
+			opt.Filters(filters),
+			opt.Page(pageNumber),
+			opt.HitsPerPage(pageSize),
+		)
+	} else {
+		searchResult, err = t.GetSearchIndex().Search(key,
+			opt.Filters(filters),
+		)
+	}
 	if err != nil || len(searchResult.Hits) == 0{
 		return nil, data.NotMore
 	}
@@ -181,6 +199,7 @@ func (t *Teacher) Search(key string, location, pageNumber, pageSize int,
 		res = append(res, &responses.TeacherSearch{
 			Username:    i.ObjectID,
 			TeacherInfo: i.TeacherInfo,
+			Schedule: t.Schedule,
 		})
 	}
 	return res, nil

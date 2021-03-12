@@ -65,6 +65,26 @@ func (o *RequestController) GetOffer() {
 	o.ServeJSON()
 }
 
+// @Title GetAvailableTeacher
+// @Description get all objects
+// @Param	request_id	path	string	true	"request id"
+// @Success 200 {object} responses.Teacher
+// @Failure 403 is empty
+// @router /:request_id/available-teacher [get]
+func (o *RequestController) GetAvailableTeacher() {
+	requestID := o.GetString(":request_id")
+	obs, err := requestusecase.GetRequestUseCase().FindAvailableTeacher(requestID)
+	if myerror.IsError(err) {
+		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
+		return
+	}
+	o.Data["json"] = responses.ResponseCommonArray{
+		Data:       obs,
+		TotalCount: len(obs),
+	}
+	o.ServeJSON()
+}
+
 // @Title PostRequest
 // @Description create teacher
 // @Param	token		header	string					true		"string"
@@ -181,33 +201,6 @@ func (o *RequestController) Delete() {
 	}
 
 	err := requestusecase.GetRequestUseCase().RemoveOne(username, requestID)
-	if myerror.IsError(err) {
-		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
-		return
-	}
-	o.Data["json"] = responses.ResponseBool{
-		Data:       true,
-	}
-	o.ServeJSON()
-}
-
-// @Title Delete
-// @Description delete the object
-// @Param	token		header 	string				true		"The token"
-// @Param	request_id	path	string				true		"the request_id"
-// @Success 200 {string} success
-// @Failure 403  is empty
-// @router /:request_id/accepted-offer [delete]
-func (o *RequestController) DeleteOffer() {
-	username := o.Ctx.Input.Header("username")
-	requestID := o.GetString(":request_id")
-
-	if username == "" || requestID == "" {
-		o.Ctx.Output.SetStatus(400)
-		return
-	}
-
-	err := requestusecase.GetRequestUseCase().DeclineOffer(username, requestID)
 	if myerror.IsError(err) {
 		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
 		return

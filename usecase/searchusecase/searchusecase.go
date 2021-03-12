@@ -4,9 +4,9 @@ import "EasyTutor/data/rest/responses"
 
 type SearchInterface interface {
 	SearchTeacher(key string, pageNumber, pageSize, location int,
-		graduation string, subject string, gender string) ([]*responses.TeacherSearch, error)
+		graduation string, subject string, gender string, method string) ([]*responses.TeacherSearch, error)
 	SearchRequest(key string, pageNumber, pageSize, location int,
-		graduation string, subject string, gender string) ([]*responses.RequestSearch, error)
+		graduation string, subject string, gender string, method string) ([]*responses.RequestSearch, error)
 }
 
 type searchHandler struct {}

@@ -1,17 +1,19 @@
 package data
 
 import (
-	"EasyTutor/utils/structdata"
+	"EasyTutor/utils/datastruct"
 )
 
 type TeacherInfo struct {
 	Name            string   `json:"name"`
+	Email		    string	 `json:"email"`
 	ListSubject     []string `json:"list_subject"`
 	Location        int      `json:"location"`
 	ListMethod      []string `json:"list_method"`
 	Description     string   `json:"description"`
 	Achievement     string   `json:"achievement"`
 	Topic           []string `json:"topic"`
+
 	BackgroundImage string   `json:"background_image"`
 	Avatar          string   `json:"avatar"`
 	Gender          string   `json:"gender"`
@@ -22,6 +24,7 @@ type TeacherInfo struct {
 type Teacher struct {
 	LoginInfo
 	Active          bool     `json:"active"`
+	User		    []string `json:"user"`
 	TeacherInfo
 	Schedule
 }
@@ -40,6 +43,7 @@ func SetDataTeacher(request TeacherInfo) (TeacherInfo, error) {
 		Gender:          request.Gender,
 		DateOfBirth:     request.DateOfBirth,
 		Graduation:      request.Graduation,
+		Email:   		 request.Email,
 	}
 	if NewGender(request.Gender) == "" {
 		return TeacherInfo{}, BadRequest
@@ -58,7 +62,7 @@ func SetDataTeacher(request TeacherInfo) (TeacherInfo, error) {
 			}
 			mapData[i] = true
 		}
-		teacher.ListSubject = structdata.MapIStringToArray(mapData)
+		teacher.ListSubject = datastruct.MapIStringToArray(mapData)
 	}
 
 	//put data list method
@@ -70,7 +74,7 @@ func SetDataTeacher(request TeacherInfo) (TeacherInfo, error) {
 			}
 			mapData[i] = true
 		}
-		teacher.ListMethod = structdata.MapIStringToArray(mapData)
+		teacher.ListMethod = datastruct.MapIStringToArray(mapData)
 	}
 
 	//set topic

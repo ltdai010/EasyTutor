@@ -32,6 +32,11 @@ func (o *CommentController) PostComment() {
 		return
 	}
 	comment := requests.CommentPost{}
+	err := json.Unmarshal(o.Ctx.Input.RequestBody, &comment)
+	if err != nil {
+		o.Ctx.Output.SetStatus(400)
+		return
+	}
 	ob, err := commentusecase.GetCommentUseCase().CreateOne(username, teacherID, comment)
 	if myerror.IsError(err) {
 		o.Ctx.Output.SetStatus(data.MapErrorCode[err])

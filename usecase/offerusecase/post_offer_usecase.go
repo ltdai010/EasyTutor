@@ -4,6 +4,7 @@ import (
 	"EasyTutor/data/data"
 	"EasyTutor/data/rest/requests"
 	"EasyTutor/models"
+	"EasyTutor/utils/logger"
 	"time"
 )
 
@@ -31,6 +32,7 @@ func (t *offerHandler) CreateOne(teacherID, requestID string, post requests.Offe
 
 	id, err := offer.Add()
 	if err != nil {
+		logger.Error("[Error Create One] Create one error offer id = %v err = %v", offer.ID, err)
 		return "", data.ErrSystem
 	}
 	return id, data.Success

@@ -3,6 +3,7 @@ package offerusecase
 import (
 	"EasyTutor/data/data"
 	"EasyTutor/models"
+	"EasyTutor/utils/logger"
 	"EasyTutor/utils/myerror"
 )
 
@@ -26,6 +27,7 @@ func (t *offerHandler) RemoveOne(username, id string) error {
 		request.AcceptOffer = ""
 		err = request.Update()
 		if err != nil {
+			logger.Error("[Error Update Request] Update error offer id = %v err = %v", request.ID, err)
 			return data.ErrSystem
 		}
 	}
@@ -36,6 +38,7 @@ func (t *offerHandler) RemoveOne(username, id string) error {
 
 	err = offer.Delete()
 	if myerror.IsError(err) {
+		logger.Error("[Error Remove One] Remove error offer id = %v err = %v", offer.ID, err)
 		return data.ErrSystem
 	}
 	return data.Success

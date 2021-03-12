@@ -2,7 +2,8 @@ package logger
 
 import (
 	"fmt"
-	"github.com/beego/beego/v2/adapter/logs"
+	"github.com/beego/beego/v2/core/logs"
+
 	"sync"
 )
 
@@ -25,24 +26,24 @@ func onceInitLogger() {
 
 // Debug write log in debug level with format
 func Debug(format string, v ...interface{}) {
-	_logger.Debug(format, v...)
+	_logger.Debug(fmt.Sprintf(format, v...))
 	fmt.Printf("[Debug] "+format+"\n", v...)
 }
 
 // Warn write log in warning level with format
 func Warn(format string, v ...interface{}) {
-	_logger.Warn(format, v...)
+	_logger.Warn(fmt.Sprintf(format, v...))
 	fmt.Printf("[Warn] "+format+"\n", v...)
 }
 
 // Error write log in error level with format
 func Error(format string, v ...interface{}) {
-	_logger.Error(format, v...)
+	_logger.Error(fmt.Sprintf(format, v...))
 	fmt.Printf("[Error] "+format+"\n", v...)
 }
 
 // Info write log in info level with format
 func Info(format string, v ...interface{}) {
-	_logger.Info(format, v...)
+	_logger.Info(fmt.Sprintf(format, v...))
 	fmt.Printf("[Info] "+format+"\n", v...)
 }

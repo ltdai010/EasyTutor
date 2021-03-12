@@ -22,6 +22,7 @@ type SearchController struct {
 // @Param	location	query	int	false	"location"
 // @Param	graduation	query	string	false	"graduation"
 // @Param	subject		query	string	false	"subject"
+// @Param	method		query	string	false	"method"
 // @Success 200 {object} responses.Teacher
 // @Failure 403 is empty
 // @router /teacher [get]
@@ -33,8 +34,9 @@ func (o *SearchController) SearchTeacher() {
 	location, _ := o.GetInt("location", 0)
 	graduation := o.GetString("graduation", "")
 	subject := o.GetString("subject", "")
+	method := o.GetString("method", "")
 	obs, err := searchusecase.GetSearchUseCase().SearchTeacher(key, pageNumber, pageLength,
-		location, graduation, subject, gender)
+		location, graduation, subject, gender, method)
 	if myerror.IsError(err) {
 		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
 		return
@@ -55,6 +57,7 @@ func (o *SearchController) SearchTeacher() {
 // @Param	location	query	int	false	"location"
 // @Param	graduation	query	string	false	"graduation"
 // @Param	subject		query	string	false	"subject"
+// @Param	method		query	string	false	"method"
 // @Success 200 {object} responses.Teacher
 // @Failure 403 is empty
 // @router /request [get]
@@ -66,8 +69,9 @@ func (o *SearchController) SearchRequest() {
 	location, _ := o.GetInt("location", 0)
 	graduation := o.GetString("graduation", "")
 	subject := o.GetString("subject", "")
+	method := o.GetString("method", "")
 	obs, err := searchusecase.GetSearchUseCase().SearchRequest(key, pageNumber, pageLength,
-		location, graduation, subject, gender)
+		location, graduation, subject, gender, method)
 	if myerror.IsError(err) {
 		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
 		return

@@ -4,6 +4,7 @@ import (
 	"EasyTutor/data/data"
 	"EasyTutor/data/rest/requests"
 	"EasyTutor/models"
+	"EasyTutor/utils/logger"
 	"EasyTutor/utils/myerror"
 )
 
@@ -34,6 +35,7 @@ func (t *offerHandler) UpdateOne(username, id string, put requests.OfferPut) err
 
 	err = offer.Update()
 	if myerror.IsError(err) {
+		logger.Error("[Error Decline Offer] Request error offer id = %v err = %v", offer.ID, err)
 		return data.ErrSystem
 	}
 	return data.Success

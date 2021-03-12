@@ -1,0 +1,12 @@
+2021/03/12 11:15:31.782  [E]  [Error sending email] user receive = %v
+2021/03/12 11:17:35.213  [E]  [Error sending email] user receive = %v
+2021/03/12 11:19:38.039  [E]  [Error sending email] user receive = %v
+2021/03/12 11:21:16.998  [E]  [Error sending email] user receive = %v
+2021/03/12 11:22:00.258  [E]  [Error sending email] user receive = %v error = %v
+2021/03/12 11:24:39.714  [E]  [Error sending email] user receive = %v error = %v
+2021/03/12 11:26:18.345  [E]  [Error sending email] user receive = %v error = %v
+2021/03/12 13:54:32.679  [I]  [Admin Login] admin login admin_id = %v
+2021/03/12 13:54:57.853  [I]  [Admin Login] admin login admin_id = %s
+2021/03/12 14:00:02.467  [I]  [Admin Login] admin login admin_id = %v
+2021/03/12 14:02:23.498  [I]  [Admin Login] admin login admin_id = admin
+2021/03/12 14:36:32.522  [I]  [Admin Login] admin login admin_id = admin
