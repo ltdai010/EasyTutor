@@ -1,0 +1,69 @@
+
+//subject các môn học
+const (
+	MATH = "math"
+	PHYSIC = "physic"
+	CHEMISTRY = "chemistry"
+	LITERATURE = "literature"
+	HISTORY = "history"
+	GEOGRAPHY = "geography"
+	BIOLOGY = "biology"
+	OTHER = "other"
+	ENGLISH = "english"
+	CHINESE = "chinese"
+	GERMAN = "german"
+	FRENCH = "french"
+	JAPANESE = "japanese"
+	APPRENTICE = "apprentice"
+)
+
+//method cách thức dạy
+const (
+	Online = "online"
+	Offline = "offline"
+)
+
+//gender giới tính
+const (
+	Male = "male"
+	Female = "female"
+)
+
+//graduation trình độ học vấn giáo viên đã tốt nghiệp, chưa tốt nghiệp, không phải ngành sư phạm đã tốt nghiệp, chưa tốt nghiệp
+const (
+	UnderGraduated = "under_graduated"
+	TeacherUnderGraduated = "teacher_under_graduated"
+	UpperGraduated = "upper_graduated"
+	TeacherUpperGraduated = "teacher_upper_graduated"
+)
+
+tài khoản đăng nhập admin : admin admin
+chạy file .exe vào http://localhost:9876/v1/easy-tutor/swagger/ để test swagger
+baseurl : http://localhost:9876
+version : v1
+app_path: easy-tutor
+
+//schedule 3 buổi mỗi ngày trong tuần, có thể dạy là true, không dạy là false
+type Schedule struct {
+	MonMorning   bool `json:"monday_morning"`
+	MonAfternoon bool `json:"monday_afternoon"`
+	MonNight     bool `json:"monday_night"`
+	TueMorning   bool `json:"tue_morning"`
+	TueAfternoon bool `json:"tue_afternoon"`
+	TueNight     bool `json:"tue_night"`
+	WedMorning   bool `json:"wed_morning"`
+	WedAfternoon bool `json:"wed_afternoon"`
+	WedNight     bool `json:"wed_night"`
+	ThuMorning   bool `json:"thu_morning"`
+	ThuAfternoon bool `json:"thu_afternoon"`
+	ThuNight     bool `json:"thu_night"`
+	FriMorning   bool `json:"fri_morning"`
+	FriAfternoon bool `json:"fri_afternoon"`
+	FriNight     bool `json:"fri_night"`
+	SatMorning   bool `json:"sat_morning"`
+	SatAfternoon bool `json:"sat_afternoon"`
+	SatNight     bool `json:"sat_night"`
+	SunMorning   bool `json:"sun_morning"`
+	SunAfternoon bool `json:"sun_afternoon"`
+	SunNight     bool `json:"sun_night"`
+}
