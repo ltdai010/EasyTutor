@@ -3,7 +3,6 @@ package middleware
 import (
 	"EasyTutor/consts"
 	"github.com/dgrijalva/jwt-go"
-	"log"
 	"time"
 )
 
@@ -35,7 +34,6 @@ func GenerateToken(username string, typeToken string) (string, error) {
 func ValidateToken(tokenString string) (string, string) {
 	token, err := jwt.ParseWithClaims(tokenString, &TokenClaims{}, KeyFunc)
 	if err != nil {
-		log.Println(err)
 		return "", ""
 	}
 	if claim, ok := token.Claims.(*TokenClaims); ok && token.Valid {

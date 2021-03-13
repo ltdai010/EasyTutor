@@ -68,6 +68,7 @@ func (t *userHandler) Login(login data.LoginInfo) (string, error) {
 func (t *userHandler) ForgotPassword(username string) error {
 	user := &models.User{}
 	mail := &models.Mail{}
+	reset := &models.ResetCode{}
 	user.Username = username
 	err := user.Get()
 	if err != nil {
@@ -77,15 +78,22 @@ func (t *userHandler) ForgotPassword(username string) error {
 	rand.Seed(time.Now().Unix())
 	code := rand.Intn(999999)
 
-	models.GetHub().BroadcastMessage(data.Notification{
-		NotificationInfo: data.NotificationInfo{
-			Username:   username,
-			UserType:   "user",
-			NotifyType: data.ResetPassword,
-			Message:    data.ForgotPassword{CheckCode: fmt.Sprintf("%06d", code)},
-		},
+	reset = &models.ResetCode{
+		Username:   username,
+		Code:       fmt.Sprintf("%06d", code),
 		CreateTime: time.Now().Unix(),
-	})
+	}
+
+	mail = &models.Mail{
+		To:      user.Email,
+		Subject: "[Easy-Tutor] Reset mật khẩu tài khoản người dùng",
+		Msg:     "Mã Reset mật khẩu tài khoản người dùng " + username + " : " + fmt.Sprintf("%06d", code),
+	}
+	err = reset.Add()
+	if err != nil {
+		return data.ErrSystem
+	}
+
 	go mail.Send(user.Email)
 
 	return data.Success
@@ -93,27 +101,24 @@ func (t *userHandler) ForgotPassword(username string) error {
 
 func (t *userHandler) ValidateResetCode(request requests.ResetPass) error {
 	user := &models.User{}
-	notification := &models.Notification{}
+	reset := &models.ResetCode{}
 	user.Username = request.Username
 	err := user.Get()
 	if err != nil {
 		return data.NotExisted
 	}
-	err = notification.GetRecentResetPassCode(request.Username, "user")
+	reset.Username = request.Username
+	err = reset.Get()
 	if err != nil {
-		return data.BadRequest
+		return data.NotExisted
 	}
-	if notification.Message.(map[string]interface{})["CheckCode"] == request.Code {
+	if reset.Code == request.Code {
 		hashed, err := bcrypt.GenerateFromPassword([]byte(request.NewPass), bcrypt.DefaultCost)
 		if err != nil {
 			return data.ErrSystem
 		}
 		user.Password = string(hashed)
 		err = user.Update()
-		if err != nil {
-			return data.ErrSystem
-		}
-		err = notification.Delete()
 		if err != nil {
 			return data.ErrSystem
 		}

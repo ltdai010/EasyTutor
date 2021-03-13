@@ -18,7 +18,6 @@ const (
 	CommentType = "comment"
 	PostOffer   = "post_offer"
 	AcceptOffer = "accept_offer"
-	ResetPassword = "reset_password"
 )
 
 type RequestNotify struct {

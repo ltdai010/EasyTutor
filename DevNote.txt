@@ -68,3 +68,9 @@ type Schedule struct {
 	SunAfternoon bool `json:"sun_afternoon"`
 	SunNight     bool `json:"sun_night"`
 }
+
+websocket notification connect vao ws://localhost:9876/v1/easy-tutor/notification
+gui goi tin dau tien gom token
+{
+    "token" : "token"
+}

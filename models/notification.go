@@ -7,7 +7,6 @@ import (
 	"cloud.google.com/go/firestore"
 	"context"
 	"log"
-	"time"
 )
 
 type Notification struct {
@@ -66,23 +65,6 @@ func (n *Notification) GetRecent(pageNumber, pageSize int, username string, user
 		res = append(res, &noti)
 	}
 	return res, total, nil
-}
-
-func (n *Notification) GetRecentResetPassCode(username, userType string) (error) {
-	noti, err := n.GetCollection().Where("Username", "==", username).Where("UserType", "==", userType).
-		Where("NotifyType", "==", data.ResetPassword).OrderBy("CreateTime", firestore.Desc).Limit(1).
-		Documents(context.Background()).GetAll()
-	if err != nil || len(noti) == 0{
-		return err
-	}
-	f := data.Notification{}
-	err = noti[0].DataTo(&f)
-	if err != nil || f.CreateTime + 120 < time.Now().Unix(){
-		return data.BadRequest
-	}
-	n.ID = noti[0].Ref.ID
-	n.Notification = f
-	return nil
 }
 
 func (n *Notification) Delete() error {

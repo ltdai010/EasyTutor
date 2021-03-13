@@ -21,6 +21,7 @@ const (
 
 type NotificationInterface interface {
 	Connect(ws *websocket.Conn) error
+	GetListNotification(pageNumber, pageSize int, username, userType string) ([]*data.Notification, int, error)
 }
 
 type notificationHandler struct {}
@@ -130,4 +131,13 @@ func writeJson(ws *websocket.Conn, v interface{}) error {
 		return err
 	}
 	return ws.WriteJSON(v)
+}
+
+func (n *notificationHandler) GetListNotification(pageNumber, pageSize int, username, userType string) ([]*data.Notification, int, error) {
+	notification := &models.Notification{}
+	res, total, err := notification.GetRecent(pageNumber - 1, pageSize, username, userType)
+	if err != nil {
+		return nil, 0, data.NotMore
+	}
+	return res, total, data.Success
 }

@@ -278,6 +278,51 @@
                 "operationId": "NotificationController.Join"
             }
         },
+        "/notification/list": {
+            "get": {
+                "tags": [
+                    "notification"
+                ],
+                "description": "find object by objectid",
+                "operationId": "NotificationController.Get",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "the token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page_number",
+                        "description": "the page number you want to get",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page_size",
+                        "description": "the page size you want to get",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/responses.Teacher"
+                        }
+                    },
+                    "403": {
+                        "description": ":teacher_id is empty"
+                    }
+                }
+            }
+        },
         "/offer/{offer_id}": {
             "get": {
                 "tags": [
@@ -1256,6 +1301,32 @@
                 }
             }
         },
+        "/user/forgot-password": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "description": "create teacher",
+                "operationId": "UserController.ForgotPass",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "username",
+                        "description": "The object content",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string} id"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
         "/user/login": {
             "post": {
                 "tags": [
@@ -1271,6 +1342,34 @@
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/data.LoginInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string} id"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/user/reset-pass": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "description": "reset pass",
+                "operationId": "UserController.ForgotPass",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The object content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/requests.ResetPass"
                         }
                     }
                 ],

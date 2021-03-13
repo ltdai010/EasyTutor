@@ -5,12 +5,12 @@ import (
 )
 
 func filterUser(ctx *context.Context) {
+	username, tokenType := ValidateToken(ctx.Input.Header("token"))
+	if username != "" && tokenType == "user"{
+		ctx.Request.Header.Set("username", username)
+		return
+	}
 	if ctx.Input.Method() == "PUT" {
-		username, tokenType := ValidateToken(ctx.Input.Header("token"))
-		if username != "" && tokenType == "user"{
-			ctx.Request.Header.Set("username", username)
-			return
-		}
 		ctx.ResponseWriter.WriteHeader(403)
 	}
 	return

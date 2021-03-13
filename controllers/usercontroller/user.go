@@ -62,6 +62,49 @@ func (o *UserController) Get() {
 	}
 }
 
+// @Title ForgotPass
+// @Description create teacher
+// @Param	username		query 	string	true		"The object content"
+// @Success 200 {string} id
+// @Failure 403 body is empty
+// @router /forgot-password [post]
+func (o *UserController) ForgotPass() {
+	teacherID := o.GetString("username")
+	err := userusecase.GetUserUseCase().ForgotPassword(teacherID)
+	if myerror.IsError(err) {
+		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
+		return
+	}
+	o.Data["json"] = responses.ResponseBool{
+		Data: true,
+	}
+	o.ServeJSON()
+}
+
+// @Title ForgotPass
+// @Description reset pass
+// @Param	body		body 	requests.ResetPass	true		"The object content"
+// @Success 200 {string} id
+// @Failure 403 body is empty
+// @router /reset-pass [post]
+func (o *UserController) ResetPass() {
+	ob := requests.ResetPass{}
+	err := json.Unmarshal(o.Ctx.Input.RequestBody, &ob)
+	if err != nil {
+		o.Ctx.Output.SetStatus(400)
+		return
+	}
+	err = userusecase.GetUserUseCase().ValidateResetCode(ob)
+	if myerror.IsError(err) {
+		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
+		return
+	}
+	o.Data["json"] = responses.ResponseBool{
+		Data: true,
+	}
+	o.ServeJSON()
+}
+
 // @Title GetPage
 // @Description get all objects
 // @Param	page_number	query	int	true	"page number"

@@ -72,8 +72,17 @@ func init() {
 
     beego.GlobalControllerRouter["EasyTutor/controllers/notificationcontroller:NotificationController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/notificationcontroller:NotificationController"],
         beego.ControllerComments{
-            Method: "JoinTeacher",
+            Method: "Join",
             Router: "/",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["EasyTutor/controllers/notificationcontroller:NotificationController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/notificationcontroller:NotificationController"],
+        beego.ControllerComments{
+            Method: "GetNotification",
+            Router: "/list",
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -342,8 +351,26 @@ func init() {
 
     beego.GlobalControllerRouter["EasyTutor/controllers/usercontroller:UserController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/usercontroller:UserController"],
         beego.ControllerComments{
+            Method: "ForgotPass",
+            Router: "/forgot-password",
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["EasyTutor/controllers/usercontroller:UserController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/usercontroller:UserController"],
+        beego.ControllerComments{
             Method: "Login",
             Router: "/login",
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["EasyTutor/controllers/usercontroller:UserController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/usercontroller:UserController"],
+        beego.ControllerComments{
+            Method: "ResetPass",
+            Router: "/reset-pass",
             AllowHTTPMethods: []string{"post"},
             MethodParams: param.Make(),
             Filters: nil,

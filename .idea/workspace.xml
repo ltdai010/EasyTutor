@@ -20,54 +20,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e34320fb-6a6e-43eb-89f8-7c80bfd01805" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/controllers/notificationcontroller/notification.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/data/notification.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/hub.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/notification.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/usecase/notificationusecase/notification_usecase.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/middleware/filter_notification.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/reset_pass.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DevNote.txt" beforeDir="false" afterPath="$PROJECT_DIR$/DevNote.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/consts/collection.go" beforeDir="false" afterPath="$PROJECT_DIR$/consts/collection.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/requestcontroller/request.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/requestcontroller/request.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/searchcontroller/search.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/searchcontroller/search.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/teachercontroller/teacher.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/teachercontroller/teacher.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data/global_data.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/data/global_data.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data/request.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/data/request.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data/teacher.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/data/teacher.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/rest/requests/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/rest/requests/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/rest/responses/request.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/rest/responses/request.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/notificationcontroller/notification.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/notificationcontroller/notification.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/usercontroller/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/usercontroller/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data/notification.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/data/notification.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/EasyTutor.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/EasyTutor.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middlerware/filter.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/filter.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middlerware/filter_admin.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/filter_admin.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middlerware/filter_comment.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/filter_comment.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middlerware/filter_offer.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/filter_offer.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middlerware/filter_request.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/filter_request.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middlerware/filter_storage.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/filter_storage.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middlerware/filter_teacher.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/filter_teacher.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middlerware/filter_user.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/filter_user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middlerware/token.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/token.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/request.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/request.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/teacher.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/teacher.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/filter.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/filter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/filter_teacher.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/filter_teacher.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/filter_user.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/filter_user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/token.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/token.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/notification.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/notification.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routers/commentsRouter_controllers.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/routers/router.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/swagger/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/swagger/swagger.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/swagger/swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/swagger/swagger.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/adminusecase/post_admin_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/adminusecase/post_admin_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/commentusecase/post_comment_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/commentusecase/post_comment_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/offerusecase/post_offer_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/offerusecase/post_offer_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/requestusecase/get_request_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/requestusecase/get_request_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/requestusecase/put_request_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/requestusecase/put_request_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/requestusecase/request_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/requestusecase/request_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/searchusecase/request_search_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/searchusecase/request_search_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/searchusecase/searchusecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/searchusecase/searchusecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/teacherusecase/get_teacher_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/teacherusecase/get_teacher_usecase.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usecase/notificationusecase/notification_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/notificationusecase/notification_usecase.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/usecase/teacherusecase/post_teacher_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/teacherusecase/post_teacher_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/teacherusecase/put_teacher_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/teacherusecase/put_teacher_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/teacherusecase/teacher_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/teacherusecase/teacher_usecase.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/usecase/userusecase/post_user_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/userusecase/post_user_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/userusecase/user_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/userusecase/user_usecase.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
