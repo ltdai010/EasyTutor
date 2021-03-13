@@ -12,7 +12,7 @@ type RequestInterface interface {
 	UpdateOne(username, id string, put requests.RequestPut) error
 	RemoveOne(username, id string) error
 	AcceptOffer(username, offerID string) error
-	FindAvailableTeacher(requestID string) ([]*responses.Teacher, error)
+	FindAvailableTeacher(requestID string) ([]*responses.TeacherSearch, error)
 }
 
 func GetRequestUseCase() RequestInterface {

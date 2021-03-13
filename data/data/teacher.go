@@ -2,6 +2,10 @@ package data
 
 import (
 	"EasyTutor/utils/datastruct"
+	"EasyTutor/utils/logger"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
 )
 
 type TeacherInfo struct {
@@ -30,6 +34,20 @@ type Teacher struct {
 }
 
 func SetDataTeacher(request TeacherInfo) (TeacherInfo, error) {
+	file, err := ioutil.ReadFile("tinh_tp.json")
+	if err != nil {
+		logger.Error("[SetDataTeacher] error read json file err = %v", err)
+		return TeacherInfo{}, ErrSystem
+	}
+	var data map[string]interface{}
+	err = json.Unmarshal(file, &data)
+	if err != nil {
+		logger.Error("[SetDataTeacher] error unmarshal json file err = %v", err)
+		return TeacherInfo{}, ErrSystem
+	}
+	if _, ok := data[fmt.Sprintf("%02d", request.Location)]; !ok {
+		return TeacherInfo{}, BadRequest
+	}
 	teacher := TeacherInfo{
 		Name:            request.Name,
 		ListSubject:     []string{},
@@ -45,7 +63,7 @@ func SetDataTeacher(request TeacherInfo) (TeacherInfo, error) {
 		Graduation:      request.Graduation,
 		Email:   		 request.Email,
 	}
-	if NewGender(request.Gender) == "" {
+	if NewGender(request.Gender) == "" || request.Gender == All{
 		return TeacherInfo{}, BadRequest
 	}
 
@@ -82,5 +100,5 @@ func SetDataTeacher(request TeacherInfo) (TeacherInfo, error) {
 		teacher.Topic = request.Topic
 	}
 
-	return teacher, nil
+	return teacher, Success
 }

@@ -25,3 +25,20 @@ func (t *teacherHandler) UpdateOne(username string, request requests.TeacherPut)
 	return data.Success
 }
 
+func (t *teacherHandler)UpdateSchedule(id string, put data.Schedule) error {
+	teacher := &models.Teacher{}
+	teacher.Username = id
+	err := teacher.Get()
+	if err != nil {
+		return data.ErrSystem
+	}
+
+	teacher.Schedule = put
+
+	err = teacher.Update()
+	if err != nil {
+		return data.ErrSystem
+	}
+
+	return data.Success
+}

@@ -117,23 +117,28 @@ func (t *Request) GetPage(pageNumber int, pageSize int) ([]*responses.Request, i
 }
 
 func (t *Request) Search(key string, location, pageNumber, pageSize int,
-	graduation data.Graduation, subject data.Subject, gender data.Gender, method data.Method) ([]*responses.RequestSearch, error) {
+	subjects []data.Subject, gender data.Gender, methods []data.Method) ([]*responses.RequestSearch, error) {
 	res := []*responses.RequestSearch{}
+	searchResult := search.QueryRes{}
+	var err error
 	filters := ""
 	if location > 0 {
 		filters += "location:'" + fmt.Sprint(location) + "'"
 	}
-	if graduation != "" {
+	if len(subjects) > 0 {
 		if filters != "" {
-			filters += " AND "
+			filters += " AND ("
 		}
-		filters += "graduation:'" + string(graduation) + "'"
-	}
-	if subject != "" {
-		if filters != "" {
-			filters += " AND "
+		for i, subject := range subjects {
+			if subject != "" {
+				if i != 0 {
+					filters += " OR subject:'" + string(subject) + "'"
+				} else {
+					filters += "subject:'" + string(subject) + "'"
+				}
+			}
 		}
-		filters += "subject:'" + string(subject) + "'"
+		filters += ")"
 	}
 	if gender != "" {
 		if filters != "" {
@@ -141,17 +146,33 @@ func (t *Request) Search(key string, location, pageNumber, pageSize int,
 		}
 		filters += "gender:'" + string(gender) + "'"
 	}
-	if method != "" {
+	if len(methods) > 0 {
 		if filters != "" {
-			filters += " AND "
+			filters += " AND ("
 		}
-		filters += "method:'" + string(method) + "'"
+		for i, method := range methods {
+			if method != "" {
+				if i != 0 {
+					filters += " OR method:'" + string(method) + "'"
+				} else {
+					filters += "method:'" + string(method) + "'"
+				}
+
+			}
+		}
+		filters += ")"
 	}
-	searchResult, err := t.GetSearchIndex().Search(key,
-		opt.Filters(filters),
-		opt.Page(pageNumber),
-		opt.HitsPerPage(pageSize),
-	)
+	if pageNumber >= 0 && pageSize > 0 {
+		searchResult, err = t.GetSearchIndex().Search(key,
+			opt.Filters(filters),
+			opt.Page(pageNumber),
+			opt.HitsPerPage(pageSize),
+		)
+	} else {
+		searchResult, err = t.GetSearchIndex().Search(key,
+			opt.Filters(filters),
+		)
+	}
 	if err != nil || len(searchResult.Hits) == 0{
 		return nil, data.NotMore
 	}
@@ -163,8 +184,7 @@ func (t *Request) Search(key string, location, pageNumber, pageSize int,
 	for _, i := range result {
 		res = append(res, &responses.RequestSearch{
 			ID:    i.ObjectID,
-			RequestInfo: i.RequestInfo,
-			Schedule:	 i.Schedule,
+			Request: i.Request,
 		})
 	}
 	return res, nil

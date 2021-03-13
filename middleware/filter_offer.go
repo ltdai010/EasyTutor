@@ -1,10 +1,10 @@
-package middlerware
+package middleware
 
 import "github.com/beego/beego/v2/server/web/context"
 
-func filterStorage(ctx *context.Context) {
-	if ctx.Input.Method() == "POST" {
-		username, typeToken := validateToken(ctx.Input.Header("token"))
+func filterOffer(ctx *context.Context) {
+	if ctx.Input.Method() == "PUT" || ctx.Input.Method() == "POST" || ctx.Input.Method() == "DELETE" {
+		username, typeToken := ValidateToken(ctx.Input.Header("token"))
 		if username != "" && typeToken == "user" {
 			ctx.Request.Header.Set("username", username)
 			return
@@ -16,3 +16,4 @@ func filterStorage(ctx *context.Context) {
 	}
 	return
 }
+

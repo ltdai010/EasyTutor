@@ -199,7 +199,7 @@ func (t *Teacher) Search(key string, location, pageNumber, pageSize int,
 		res = append(res, &responses.TeacherSearch{
 			Username:    i.ObjectID,
 			TeacherInfo: i.TeacherInfo,
-			Schedule: t.Schedule,
+			Schedule: i.Schedule,
 		})
 	}
 	return res, nil

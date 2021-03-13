@@ -27,6 +27,7 @@ const (
 const (
 	Male = "male"
 	Female = "female"
+	All = "all"
 )
 
 //graduation trình độ học vấn giáo viên đã tốt nghiệp, chưa tốt nghiệp, không phải ngành sư phạm đã tốt nghiệp, chưa tốt nghiệp

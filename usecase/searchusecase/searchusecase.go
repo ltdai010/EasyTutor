@@ -6,7 +6,7 @@ type SearchInterface interface {
 	SearchTeacher(key string, pageNumber, pageSize, location int,
 		graduation string, subject string, gender string, method string) ([]*responses.TeacherSearch, error)
 	SearchRequest(key string, pageNumber, pageSize, location int,
-		graduation string, subject string, gender string, method string) ([]*responses.RequestSearch, error)
+		subject string, gender string, method string) ([]*responses.RequestSearch, error)
 }
 
 type searchHandler struct {}

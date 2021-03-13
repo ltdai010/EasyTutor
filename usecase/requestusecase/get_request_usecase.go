@@ -4,6 +4,7 @@ import (
 	"EasyTutor/data/data"
 	"EasyTutor/data/rest/responses"
 	"EasyTutor/models"
+	"log"
 )
 
 func (t *requestHandler) GetOne(id string) (*responses.Request, error) {
@@ -28,7 +29,7 @@ func (t *requestHandler) GetPage(pageNumber int, pageSize int) ([]*responses.Req
 	return listRequest, total, data.Success
 }
 
-func (t *requestHandler) FindAvailableTeacher(requestID string) ([]*responses.Teacher, error) {
+func (t *requestHandler) FindAvailableTeacher(requestID string) ([]*responses.TeacherSearch, error) {
 	teacher := &models.Teacher{}
 	request := &models.Request{}
 
@@ -39,8 +40,9 @@ func (t *requestHandler) FindAvailableTeacher(requestID string) ([]*responses.Te
 	}
 
 	result, err := teacher.Search("", request.Location, 0, 0,
-		data.NewGraduation(request.Graduation), data.NewSubject(request.Subject), data.NewGender(request.Gender),
+		data.NewGraduation(""), data.NewSubject(request.Subject), data.NewGender(request.Gender),
 		data.NewMethod(request.Method))
+	log.Println(result)
 	if err != nil {
 		return nil, data.NotMore
 	}
@@ -48,11 +50,11 @@ func (t *requestHandler) FindAvailableTeacher(requestID string) ([]*responses.Te
 }
 
 
-func filterSchedule(teachers []*responses.TeacherSearch, schedule data.Schedule) ([]*responses.Teacher, error) {
-	res := []*responses.Teacher{}
+func filterSchedule(teachers []*responses.TeacherSearch, schedule data.Schedule) ([]*responses.TeacherSearch, error) {
+	res := []*responses.TeacherSearch{}
 	for _, teacher := range teachers {
-		if checkSchedule(schedule, teacher.Schedule) {
-			res = append(res, &responses.Teacher{
+		if data.CheckSchedule(teacher.Schedule, schedule) {
+			res = append(res, &responses.TeacherSearch{
 				Username:    teacher.Username,
 				TeacherInfo: teacher.TeacherInfo,
 				Schedule:    teacher.Schedule,
@@ -61,71 +63,4 @@ func filterSchedule(teachers []*responses.TeacherSearch, schedule data.Schedule)
 	}
 
 	return res, data.Success
-}
-
-func checkSchedule(desSchedule, srcSchedule data.Schedule) bool {
-	if srcSchedule.MonMorning && !desSchedule.MonMorning {
-		return false
-	}
-	if srcSchedule.MonAfternoon && !desSchedule.MonAfternoon {
-		return false
-	}
-	if srcSchedule.MonNight && !desSchedule.MonNight {
-		return false
-	}
-	if srcSchedule.TueMorning && !desSchedule.TueMorning {
-		return false
-	}
-	if srcSchedule.TueAfternoon && !desSchedule.TueAfternoon {
-		return false
-	}
-	if srcSchedule.TueNight && !desSchedule.TueNight {
-		return false
-	}
-	if srcSchedule.WedMorning && !desSchedule.WedMorning {
-		return false
-	}
-	if srcSchedule.WedAfternoon && !desSchedule.WedAfternoon {
-		return false
-	}
-	if srcSchedule.WedNight && !desSchedule.WedNight {
-		return false
-	}
-	if srcSchedule.ThuMorning && !desSchedule.ThuMorning {
-		return false
-	}
-	if srcSchedule.ThuAfternoon && !desSchedule.ThuAfternoon {
-		return false
-	}
-	if srcSchedule.ThuNight && !desSchedule.ThuNight {
-		return false
-	}
-	if srcSchedule.FriMorning && !desSchedule.FriMorning {
-		return false
-	}
-	if srcSchedule.FriAfternoon && !desSchedule.FriAfternoon {
-		return false
-	}
-	if srcSchedule.FriNight && !desSchedule.FriNight {
-		return false
-	}
-	if srcSchedule.SatMorning && !desSchedule.SatMorning {
-		return false
-	}
-	if srcSchedule.SatAfternoon && !desSchedule.SatAfternoon {
-		return false
-	}
-	if srcSchedule.SatNight && !desSchedule.SatNight {
-		return false
-	}
-	if srcSchedule.SunMorning && !desSchedule.SunMorning {
-		return false
-	}
-	if srcSchedule.SatAfternoon && !desSchedule.SatAfternoon {
-		return false
-	}
-	if srcSchedule.SunNight && !desSchedule.SunNight {
-		return false
-	}
-	return true
 }

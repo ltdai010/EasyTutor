@@ -1,4 +1,4 @@
-package middlerware
+package middleware
 
 import (
 	"github.com/beego/beego/v2/server/web/context"
@@ -6,7 +6,7 @@ import (
 
 func filterUser(ctx *context.Context) {
 	if ctx.Input.Method() == "PUT" {
-		username, tokenType := validateToken(ctx.Input.Header("token"))
+		username, tokenType := ValidateToken(ctx.Input.Header("token"))
 		if username != "" && tokenType == "user"{
 			ctx.Request.Header.Set("username", username)
 			return

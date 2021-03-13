@@ -70,6 +70,15 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["EasyTutor/controllers/notificationcontroller:NotificationController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/notificationcontroller:NotificationController"],
+        beego.ControllerComments{
+            Method: "JoinTeacher",
+            Router: "/",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["EasyTutor/controllers/offercontroller:OfferController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/offercontroller:OfferController"],
         beego.ControllerComments{
             Method: "Get",
@@ -120,6 +129,15 @@ func init() {
             Method: "Put",
             Router: "/:request_id",
             AllowHTTPMethods: []string{"put"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["EasyTutor/controllers/requestcontroller:RequestController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/requestcontroller:RequestController"],
+        beego.ControllerComments{
+            Method: "Get",
+            Router: "/:request_id",
+            AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
             Params: nil})
@@ -234,6 +252,15 @@ func init() {
 
     beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"],
         beego.ControllerComments{
+            Method: "GetAvailableRequest",
+            Router: "/:teacher_id/available-request",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"],
+        beego.ControllerComments{
             Method: "GetComment",
             Router: "/:teacher_id/comment",
             AllowHTTPMethods: []string{"get"},
@@ -243,9 +270,36 @@ func init() {
 
     beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"],
         beego.ControllerComments{
+            Method: "ForgotPass",
+            Router: "/forgot-password",
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"],
+        beego.ControllerComments{
             Method: "Login",
             Router: "/login",
             AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"],
+        beego.ControllerComments{
+            Method: "ResetPass",
+            Router: "/reset-pass",
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"],
+        beego.ControllerComments{
+            Method: "PutSchedule",
+            Router: "/schedule",
+            AllowHTTPMethods: []string{"put"},
             MethodParams: param.Make(),
             Filters: nil,
             Params: nil})

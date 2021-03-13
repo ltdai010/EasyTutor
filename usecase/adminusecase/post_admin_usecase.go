@@ -2,7 +2,7 @@ package adminusecase
 
 import (
 	"EasyTutor/data/data"
-	"EasyTutor/middlerware"
+	"EasyTutor/middleware"
 	"EasyTutor/models"
 	"EasyTutor/utils/logger"
 	"golang.org/x/crypto/bcrypt"
@@ -21,5 +21,5 @@ func (a *adminHandler) Login(request data.LoginInfo) (string, error) {
 	}
 
 	logger.Info("[Admin Login] admin login admin_id = %v", request.Username)
-	return middlerware.GenerateToken(request.Username, "admin")
+	return middleware.GenerateToken(request.Username, "admin")
 }

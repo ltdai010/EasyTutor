@@ -35,6 +35,20 @@ func (t *offerHandler) CreateOne(teacherID, requestID string, post requests.Offe
 		logger.Error("[Error Create One] Create one error offer id = %v err = %v", offer.ID, err)
 		return "", data.ErrSystem
 	}
+
+	models.GetHub().BroadcastMessage(data.Notification{
+		NotificationInfo: data.NotificationInfo{
+			Username:   request.Username,
+			UserType:   "user",
+			NotifyType: data.PostOffer,
+			Message:    data.OfferNotify{
+				Message:     "Một giáo viên đã thêm đề nghị dạy học",
+				OfferID:     id,
+				TeacherName: teacherID,
+			},
+		},
+		CreateTime: time.Now().Unix(),
+	})
 	return id, data.Success
 }
 

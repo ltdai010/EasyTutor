@@ -10,6 +10,7 @@ require (
 	firebase.google.com/go v3.13.0+incompatible
 	github.com/algolia/algoliasearch-client-go/v3 v3.17.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/gorilla/websocket v1.4.2
 	github.com/smartystreets/goconvey v1.6.4
 	go.opencensus.io v0.23.0 // indirect
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9

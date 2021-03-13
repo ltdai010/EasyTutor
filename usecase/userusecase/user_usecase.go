@@ -12,7 +12,9 @@ type UserInterface interface {
 	GetOne(id string) (*responses.User, error)
 	UpdateOne(id string, put requests.UserPut) error
 	RemoveOne(id string) error
+	ForgotPassword(username string) error
 	Login(login data.LoginInfo) (string, error)
+	ValidateResetCode(request requests.ResetPass) error
 }
 
 func GetUserUseCase() UserInterface {

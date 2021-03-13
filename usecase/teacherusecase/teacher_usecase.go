@@ -13,6 +13,10 @@ type TeacherInterface interface {
 	UpdateOne(id string, put requests.TeacherPut) error
 	RemoveOne(id string) error
 	Login(login data.LoginInfo) (string, error)
+	FindAvailableRequest(teacherID string) ([]*responses.RequestSearch, error)
+	UpdateSchedule(id string, put data.Schedule) error
+	ForgotPassword(username string) error
+	ValidateResetCode(request requests.ResetPass) error
 }
 
 func GetTeacherUseCase() TeacherInterface {

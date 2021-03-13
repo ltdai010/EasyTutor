@@ -9,6 +9,5 @@ type Request struct {
 
 type RequestSearch struct {
 	ID string `json:"id"`
-	data.RequestInfo
-	data.Schedule
+	data.Request
 }

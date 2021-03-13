@@ -3,9 +3,14 @@ package teacherusecase
 import (
 	"EasyTutor/data/data"
 	"EasyTutor/data/rest/requests"
-	"EasyTutor/middlerware"
+	"EasyTutor/middleware"
 	"EasyTutor/models"
+	"EasyTutor/utils/logger"
+	"EasyTutor/utils/myerror"
+	"fmt"
 	"golang.org/x/crypto/bcrypt"
+	"math/rand"
+	"time"
 )
 
 func (t *teacherHandler) CreateOne(request requests.TeacherPost) (string, error) {
@@ -27,10 +32,10 @@ func (t *teacherHandler) CreateOne(request requests.TeacherPost) (string, error)
 		Password: string(hashed),
 	}
 	teacher.TeacherInfo, err = data.SetDataTeacher(request.TeacherInfo)
-	teacher.Active = false
-	if err != nil {
-		return "", data.BadRequest
+	if myerror.IsError(err) {
+		return "", err
 	}
+	teacher.Active = false
 
 	teacher.Schedule = data.Schedule{
 		MonMorning:   false,
@@ -58,6 +63,7 @@ func (t *teacherHandler) CreateOne(request requests.TeacherPost) (string, error)
 
 	id, err := teacher.Add()
 	if err != nil {
+		logger.Info("[CreateOne Teacher] Create Teacher error = %v", err)
 		return "", data.ErrSystem
 	}
 	return id, data.Success
@@ -80,9 +86,71 @@ func (t *teacherHandler) Login(login data.LoginInfo) (string, error) {
 		return "", data.BadRequest
 	}
 
-	token, err := middlerware.GenerateToken(login.Username, "teacher")
+	token, err := middleware.GenerateToken(login.Username, "teacher")
 	if err != nil {
 		return "", data.ErrLogin
 	}
 	return token, data.Success
+}
+
+func (t *teacherHandler) ForgotPassword(username string) error {
+	teacher := &models.Teacher{}
+	mail := &models.Mail{}
+	teacher.Username = username
+	err := teacher.Get()
+	if err != nil {
+		return data.NotExisted
+	}
+
+	rand.Seed(time.Now().Unix())
+	code := rand.Intn(999999)
+
+	models.GetHub().BroadcastMessage(data.Notification{
+		NotificationInfo: data.NotificationInfo{
+			Username:   username,
+			UserType:   "teacher",
+			NotifyType: data.ResetPassword,
+			Message:    data.ForgotPassword{CheckCode: fmt.Sprintf("%06d", code)},
+		},
+		CreateTime: time.Now().Unix(),
+	})
+	mail = &models.Mail{
+		To:      teacher.Email,
+		Subject: "[Easy-Tutor] Tạo mới mật khẩu cho tài khoản người dùng " + username + " của bạn",
+		Msg:     "Mã xác nhận của bạn là " + fmt.Sprintf("%06d", code),
+	}
+	go mail.Send(teacher.Email)
+
+	return data.Success
+}
+
+func (t *teacherHandler) ValidateResetCode(request requests.ResetPass) error {
+	teacher := &models.Teacher{}
+	notification := &models.Notification{}
+	teacher.Username = request.Username
+	err := teacher.Get()
+	if err != nil {
+		return data.NotExisted
+	}
+	err = notification.GetRecentResetPassCode(request.Username, "teacher")
+	if err != nil {
+		return data.BadRequest
+	}
+	if notification.Message.(map[string]interface{})["CheckCode"] == request.Code {
+		hashed, err := bcrypt.GenerateFromPassword([]byte(request.NewPass), bcrypt.DefaultCost)
+		if err != nil {
+			return data.ErrSystem
+		}
+		teacher.Password = string(hashed)
+		err = teacher.Update()
+		if err != nil {
+			return data.ErrSystem
+		}
+		err = notification.Delete()
+		if err != nil {
+			return data.ErrSystem
+		}
+		return data.Success
+	}
+	return data.BadRequest
 }

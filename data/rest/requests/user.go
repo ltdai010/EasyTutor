@@ -10,3 +10,9 @@ type UserPost struct {
 type UserPut struct {
 	data.UserInfo
 }
+
+type ResetPass struct {
+	Username string	`json:"username"`
+	Code	string	`json:"code"`
+	NewPass string	`json:"new_pass"`
+}

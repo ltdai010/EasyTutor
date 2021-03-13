@@ -40,5 +40,20 @@ func (t *commentHandler) CreateOne(username, teacherID string, post requests.Com
 	if err != nil {
 		return "", data.ErrSystem
 	}
+
+	models.GetHub().BroadcastMessage(data.Notification{
+		NotificationInfo: data.NotificationInfo{
+			Username:         comment.TeacherID,
+			UserType:         "teacher",
+			NotifyType:       data.CommentType,
+			Message: data.CommentNotify{
+				Message:      "Một người đã bình luận về bạn",
+				CommentID:    id,
+				UserDisplayName: user.DisplayName,
+			},
+		},
+		CreateTime: time.Now().Unix(),
+	})
+
 	return id, data.Success
 }

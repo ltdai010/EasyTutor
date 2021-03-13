@@ -1,10 +1,15 @@
-package middlerware
+package middleware
 
-import "github.com/beego/beego/v2/server/web/context"
+import (
+	"github.com/beego/beego/v2/server/web/context"
+	"log"
+)
 
-func filterComment(ctx *context.Context) {
+func filterRequest(ctx *context.Context) {
 	if ctx.Input.Method() == "PUT" || ctx.Input.Method() == "POST" || ctx.Input.Method() == "DELETE" {
-		username, typeToken := validateToken(ctx.Input.Header("token"))
+		username, typeToken := ValidateToken(ctx.Input.Header("token"))
+		log.Println(username)
+		log.Println(typeToken)
 		if username != "" && typeToken == "user" {
 			ctx.Request.Header.Set("username", username)
 			return
@@ -16,4 +21,3 @@ func filterComment(ctx *context.Context) {
 	}
 	return
 }
-

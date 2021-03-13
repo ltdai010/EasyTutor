@@ -68,7 +68,7 @@ func (o *RequestController) GetOffer() {
 // @Title GetAvailableTeacher
 // @Description get all objects
 // @Param	request_id	path	string	true	"request id"
-// @Success 200 {object} responses.Teacher
+// @Success 200 {object} responses.TeacherSearch
 // @Failure 403 is empty
 // @router /:request_id/available-teacher [get]
 func (o *RequestController) GetAvailableTeacher() {
@@ -180,6 +180,27 @@ func (o *RequestController) Put() {
 	}
 	o.Data["json"] = responses.ResponseBool{
 		Data:       true,
+	}
+	o.ServeJSON()
+}
+
+// @Title Update
+// @Description update the object
+// @Param	token		header 	string				true		"The token"
+// @Param	request_id	path	string				true		"the request_id"
+// @Success 200 {string} success
+// @Failure 403  is empty
+// @router /:request_id [get]
+func (o *RequestController) Get() {
+	requestID := o.GetString(":request_id")
+
+	ob, err := requestusecase.GetRequestUseCase().GetOne(requestID)
+	if myerror.IsError(err) {
+		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
+		return
+	}
+	o.Data["json"] = responses.ResponseCommonSingle{
+		Data:       ob,
 	}
 	o.ServeJSON()
 }

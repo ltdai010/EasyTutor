@@ -10,6 +10,7 @@ package routers
 import (
 	"EasyTutor/controllers/admincontroller"
 	"EasyTutor/controllers/commentcontroller"
+	"EasyTutor/controllers/notificationcontroller"
 	"EasyTutor/controllers/offercontroller"
 	"EasyTutor/controllers/requestcontroller"
 	"EasyTutor/controllers/searchcontroller"
@@ -60,6 +61,11 @@ func init() {
 		beego.NSNamespace("/admin",
 			beego.NSInclude(
 				&admincontroller.AdminController{},
+			),
+		),
+		beego.NSNamespace("/notification",
+			beego.NSInclude(
+				&notificationcontroller.NotificationController{},
 			),
 		),
 	)

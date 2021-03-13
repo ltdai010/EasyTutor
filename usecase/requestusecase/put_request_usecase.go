@@ -7,6 +7,7 @@ import (
 	"EasyTutor/utils/datastruct"
 	"EasyTutor/utils/logger"
 	"EasyTutor/utils/myerror"
+	"time"
 )
 
 func (t *requestHandler) UpdateOne(username, id string, put requests.RequestPut) error {
@@ -78,6 +79,18 @@ func (t *requestHandler) AcceptOffer(username, offerID string) error {
 		logger.Error("[Error Accept Offer] Update error teacher id = %v err = %v", offer.TeacherID, err)
 		return data.ErrSystem
 	}
-
+	models.GetHub().BroadcastMessage(data.Notification{
+		NotificationInfo: data.NotificationInfo{
+			Username:   teacher.Username,
+			UserType:   "teacher",
+			NotifyType: data.AcceptOffer,
+			Message:    data.RequestNotify{
+				Message:     "Đề nghị dạy của bạn đã được chấp nhận",
+				RequestID:     request.ID,
+				RequestTitle: request.Title,
+			},
+		},
+		CreateTime: time.Now().Unix(),
+	})
 	return data.Success
 }

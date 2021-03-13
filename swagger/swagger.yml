@@ -181,6 +181,12 @@ paths:
             $ref: '#/definitions/responses.Comment'
         "403":
           description: :user_id is empty
+  /notification/:
+    get:
+      tags:
+      - notification
+      description: WebSocket, connect only, don't write anything
+      operationId: NotificationController.Join
   /offer/{offer_id}:
     get:
       tags:
@@ -295,6 +301,27 @@ paths:
         "403":
           description: body is empty
   /request/{request_id}:
+    get:
+      tags:
+      - request
+      description: update the object
+      operationId: RequestController.Update
+      parameters:
+      - in: header
+        name: token
+        description: The token
+        required: true
+        type: string
+      - in: path
+        name: request_id
+        description: the request_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} success'
+        "403":
+          description: is empty
     put:
       tags:
       - request
@@ -359,7 +386,7 @@ paths:
         "200":
           description: ""
           schema:
-            $ref: '#/definitions/responses.Teacher'
+            $ref: '#/definitions/responses.TeacherSearch'
         "403":
           description: is empty
   /request/{request_id}/offer:
@@ -462,10 +489,6 @@ paths:
         description: location
         type: integer
         format: int64
-      - in: query
-        name: graduation
-        description: graduation
-        type: string
       - in: query
         name: subject
         description: subject
@@ -638,6 +661,25 @@ paths:
             $ref: '#/definitions/responses.Teacher'
         "403":
           description: :teacher_id is empty
+  /teacher/{teacher_id}/available-request:
+    get:
+      tags:
+      - teacher
+      description: find object by objectid
+      operationId: TeacherController.Get
+      parameters:
+      - in: path
+        name: teacher_id
+        description: the teacher_id you want to get
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/responses.Teacher'
+        "403":
+          description: :teacher_id is empty
   /teacher/{teacher_id}/comment:
     get:
       tags:
@@ -657,6 +699,23 @@ paths:
             $ref: '#/definitions/responses.Comment'
         "403":
           description: :teacher_id is empty
+  /teacher/forgot-password:
+    post:
+      tags:
+      - teacher
+      description: create teacher
+      operationId: TeacherController.ForgotPass
+      parameters:
+      - in: query
+        name: teacher_id
+        description: The object content
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} id'
+        "403":
+          description: body is empty
   /teacher/login:
     post:
       tags:
@@ -675,6 +734,47 @@ paths:
           description: '{string} id'
         "403":
           description: body is empty
+  /teacher/reset-pass:
+    post:
+      tags:
+      - teacher
+      description: create teacher
+      operationId: TeacherController.ForgotPass
+      parameters:
+      - in: body
+        name: body
+        description: The object content
+        required: true
+        schema:
+          $ref: '#/definitions/requests.ResetPass'
+      responses:
+        "200":
+          description: '{string} id'
+        "403":
+          description: body is empty
+  /teacher/schedule:
+    put:
+      tags:
+      - teacher
+      description: update the object
+      operationId: TeacherController.Update
+      parameters:
+      - in: header
+        name: token
+        description: The token
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: The body
+        required: true
+        schema:
+          $ref: '#/definitions/data.Schedule'
+      responses:
+        "200":
+          description: '{string} success'
+        "403":
+          description: is empty
   /user/:
     get:
       tags:
@@ -844,20 +944,18 @@ definitions:
     properties:
       description:
         type: string
-      duration:
-        type: integer
-        format: int64
       exact_location:
         type: string
       gender:
-        type: string
-      graduation:
         type: string
       location:
         type: integer
         format: int64
       method:
         type: string
+      number_of_student:
+        type: integer
+        format: int64
       phone_number:
         type: string
       price:
@@ -865,6 +963,12 @@ definitions:
         format: int64
       subject:
         type: string
+      time:
+        type: integer
+        format: int64
+      times_per_week:
+        type: integer
+        format: int64
       title:
         type: string
   data.Schedule:
@@ -1005,9 +1109,6 @@ definitions:
     properties:
       description:
         type: string
-      duration:
-        type: integer
-        format: int64
       exact_location:
         type: string
       fri_afternoon:
@@ -1017,8 +1118,6 @@ definitions:
       fri_night:
         type: boolean
       gender:
-        type: string
-      graduation:
         type: string
       location:
         type: integer
@@ -1031,6 +1130,9 @@ definitions:
         type: boolean
       monday_night:
         type: boolean
+      number_of_student:
+        type: integer
+        format: int64
       phone_number:
         type: string
       price:
@@ -1056,6 +1158,12 @@ definitions:
         type: boolean
       thu_night:
         type: boolean
+      time:
+        type: integer
+        format: int64
+      times_per_week:
+        type: integer
+        format: int64
       title:
         type: string
       tue_afternoon:
@@ -1076,9 +1184,6 @@ definitions:
     properties:
       description:
         type: string
-      duration:
-        type: integer
-        format: int64
       exact_location:
         type: string
       fri_afternoon:
@@ -1088,8 +1193,6 @@ definitions:
       fri_night:
         type: boolean
       gender:
-        type: string
-      graduation:
         type: string
       location:
         type: integer
@@ -1102,6 +1205,9 @@ definitions:
         type: boolean
       monday_night:
         type: boolean
+      number_of_student:
+        type: integer
+        format: int64
       phone_number:
         type: string
       price:
@@ -1127,6 +1233,12 @@ definitions:
         type: boolean
       thu_night:
         type: boolean
+      time:
+        type: integer
+        format: int64
+      times_per_week:
+        type: integer
+        format: int64
       title:
         type: string
       tue_afternoon:
@@ -1141,6 +1253,16 @@ definitions:
         type: boolean
       wed_night:
         type: boolean
+  requests.ResetPass:
+    title: ResetPass
+    type: object
+    properties:
+      code:
+        type: string
+      new_pass:
+        type: string
+      username:
+        type: string
   requests.TeacherPost:
     title: TeacherPost
     type: object
@@ -1284,6 +1406,88 @@ definitions:
         type: string
   responses.Teacher:
     title: Teacher
+    type: object
+    properties:
+      achievement:
+        type: string
+      avatar:
+        type: string
+      background_image:
+        type: string
+      date_of_birth:
+        type: integer
+        format: int64
+      description:
+        type: string
+      email:
+        type: string
+      fri_afternoon:
+        type: boolean
+      fri_morning:
+        type: boolean
+      fri_night:
+        type: boolean
+      gender:
+        type: string
+      graduation:
+        type: string
+      list_method:
+        type: array
+        items:
+          type: string
+      list_subject:
+        type: array
+        items:
+          type: string
+      location:
+        type: integer
+        format: int64
+      monday_afternoon:
+        type: boolean
+      monday_morning:
+        type: boolean
+      monday_night:
+        type: boolean
+      name:
+        type: string
+      sat_afternoon:
+        type: boolean
+      sat_morning:
+        type: boolean
+      sat_night:
+        type: boolean
+      sun_afternoon:
+        type: boolean
+      sun_morning:
+        type: boolean
+      sun_night:
+        type: boolean
+      thu_afternoon:
+        type: boolean
+      thu_morning:
+        type: boolean
+      thu_night:
+        type: boolean
+      topic:
+        type: array
+        items:
+          type: string
+      tue_afternoon:
+        type: boolean
+      tue_morning:
+        type: boolean
+      tue_night:
+        type: boolean
+      username:
+        type: string
+      wed_afternoon:
+        type: boolean
+      wed_morning:
+        type: boolean
+      wed_night:
+        type: boolean
+  responses.TeacherSearch:
+    title: TeacherSearch
     type: object
     properties:
       achievement:

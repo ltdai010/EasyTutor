@@ -1,4 +1,4 @@
-package middlerware
+package middleware
 
 import (
 	"EasyTutor/consts"
@@ -31,7 +31,8 @@ func GenerateToken(username string, typeToken string) (string, error) {
 	return token.SignedString([]byte(consts.SecretKey))
 }
 
-func validateToken(tokenString string) (string, string) {
+//return the username and the usertype
+func ValidateToken(tokenString string) (string, string) {
 	token, err := jwt.ParseWithClaims(tokenString, &TokenClaims{}, KeyFunc)
 	if err != nil {
 		log.Println(err)

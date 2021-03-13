@@ -55,7 +55,6 @@ func (o *SearchController) SearchTeacher() {
 // @Param	key			query	string	false	"key"
 // @Param	gender		query	string  false	"gender"
 // @Param	location	query	int	false	"location"
-// @Param	graduation	query	string	false	"graduation"
 // @Param	subject		query	string	false	"subject"
 // @Param	method		query	string	false	"method"
 // @Success 200 {object} responses.Teacher
@@ -67,11 +66,10 @@ func (o *SearchController) SearchRequest() {
 	key := o.GetString("key", "")
 	gender := o.GetString("gender", "")
 	location, _ := o.GetInt("location", 0)
-	graduation := o.GetString("graduation", "")
 	subject := o.GetString("subject", "")
 	method := o.GetString("method", "")
 	obs, err := searchusecase.GetSearchUseCase().SearchRequest(key, pageNumber, pageLength,
-		location, graduation, subject, gender, method)
+		location, subject, gender, method)
 	if myerror.IsError(err) {
 		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
 		return

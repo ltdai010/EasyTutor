@@ -78,6 +78,7 @@ type Gender string
 const (
 	Male = "male"
 	Female = "female"
+	All = "all"
 )
 
 func NewGender(sGender string) Gender {
@@ -86,6 +87,8 @@ func NewGender(sGender string) Gender {
 		return Male
 	case Female:
 		return Female
+	case All:
+		return All
 	default:
 		return ""
 	}
@@ -113,6 +116,74 @@ type Schedule struct {
 	SunMorning   bool `json:"sun_morning"`
 	SunAfternoon bool `json:"sun_afternoon"`
 	SunNight     bool `json:"sun_night"`
+}
+
+//check if every time src schedule = true, des schedule = true
+func CheckSchedule(desSchedule, srcSchedule Schedule) bool {
+	if srcSchedule.MonMorning && !desSchedule.MonMorning {
+		return false
+	}
+	if srcSchedule.MonAfternoon && !desSchedule.MonAfternoon {
+		return false
+	}
+	if srcSchedule.MonNight && !desSchedule.MonNight {
+		return false
+	}
+	if srcSchedule.TueMorning && !desSchedule.TueMorning {
+		return false
+	}
+	if srcSchedule.TueAfternoon && !desSchedule.TueAfternoon {
+		return false
+	}
+	if srcSchedule.TueNight && !desSchedule.TueNight {
+		return false
+	}
+	if srcSchedule.WedMorning && !desSchedule.WedMorning {
+		return false
+	}
+	if srcSchedule.WedAfternoon && !desSchedule.WedAfternoon {
+		return false
+	}
+	if srcSchedule.WedNight && !desSchedule.WedNight {
+		return false
+	}
+	if srcSchedule.ThuMorning && !desSchedule.ThuMorning {
+		return false
+	}
+	if srcSchedule.ThuAfternoon && !desSchedule.ThuAfternoon {
+		return false
+	}
+	if srcSchedule.ThuNight && !desSchedule.ThuNight {
+		return false
+	}
+	if srcSchedule.FriMorning && !desSchedule.FriMorning {
+		return false
+	}
+	if srcSchedule.FriAfternoon && !desSchedule.FriAfternoon {
+		return false
+	}
+	if srcSchedule.FriNight && !desSchedule.FriNight {
+		return false
+	}
+	if srcSchedule.SatMorning && !desSchedule.SatMorning {
+		return false
+	}
+	if srcSchedule.SatAfternoon && !desSchedule.SatAfternoon {
+		return false
+	}
+	if srcSchedule.SatNight && !desSchedule.SatNight {
+		return false
+	}
+	if srcSchedule.SunMorning && !desSchedule.SunMorning {
+		return false
+	}
+	if srcSchedule.SatAfternoon && !desSchedule.SatAfternoon {
+		return false
+	}
+	if srcSchedule.SunNight && !desSchedule.SunNight {
+		return false
+	}
+	return true
 }
 
 type Graduation string
@@ -145,3 +216,25 @@ const (
 	Open = "open"
 	Close = "close"
 )
+
+func ListStringToSubjects(strings []string) []Subject {
+	res := []Subject{}
+	for _, i := range strings {
+		s := NewSubject(i)
+		if s != "" {
+			res = append(res, s)
+		}
+	}
+	return res
+}
+
+func ListStringToMethod(strings []string) []Method {
+	res := []Method{}
+	for _, i := range strings {
+		s := NewMethod(i)
+		if s != "" {
+			res = append(res, s)
+		}
+	}
+	return res
+}
