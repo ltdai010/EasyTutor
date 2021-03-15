@@ -32,3 +32,16 @@ func (a *adminHandler) ValidateTeacher(teacherID string) error {
 	return data.Success
 }
 
+func (a *adminHandler) ValidateUpdateTeacher(teacherID string) error {
+	teacher := &models.Teacher{}
+	teacher.Username = teacherID
+	err := teacher.GetUpdating()
+	if err != nil {
+		return data.NotExisted
+	}
+	err = teacher.Update()
+	if err != nil {
+		return data.ErrSystem
+	}
+	return data.Success
+}

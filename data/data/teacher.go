@@ -33,6 +33,11 @@ type Teacher struct {
 	Schedule
 }
 
+type TeacherUpdate struct {
+	Teacher
+	UpdateTime	int64	`json:"update_time"`
+}
+
 func SetDataTeacher(request TeacherInfo) (TeacherInfo, error) {
 	file, err := ioutil.ReadFile("tinh_tp.json")
 	if err != nil {

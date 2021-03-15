@@ -34,6 +34,15 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["EasyTutor/controllers/admincontroller:AdminController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/admincontroller:AdminController"],
+        beego.ControllerComments{
+            Method: "UpdateUser",
+            Router: "/updating-teacher/:teacher_id",
+            AllowHTTPMethods: []string{"put"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["EasyTutor/controllers/commentcontroller:CommentController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/commentcontroller:CommentController"],
         beego.ControllerComments{
             Method: "Get",

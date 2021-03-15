@@ -18,7 +18,7 @@ func (t *teacherHandler) UpdateOne(username string, request requests.TeacherPut)
 	if myerror.IsError(err) {
 		return data.BadRequest
 	}
-	err = teacher.Update()
+	err = teacher.UpdateToWait()
 	if myerror.IsError(err) {
 		return data.ErrSystem
 	}

@@ -12,6 +12,7 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v3/algolia/opt"
 	"github.com/algolia/algoliasearch-client-go/v3/algolia/search"
 	"log"
+	"time"
 )
 
 type Teacher struct {
@@ -20,6 +21,14 @@ type Teacher struct {
 
 func (t *Teacher) GetCollectionKey() string {
 	return consts.TEACHER
+}
+
+func (t *Teacher) GetWaitUpdateCollectionKey() string {
+	return consts.WAIT
+}
+
+func (t *Teacher) GetWaitUpdateCollection() *firestore.CollectionRef {
+	return drivers.GetDriver().GetCloudStore().Collection(t.GetWaitUpdateCollectionKey())
 }
 
 func (t *Teacher) GetCollection() *firestore.CollectionRef {
@@ -52,6 +61,29 @@ func (t *Teacher) Get() error {
 		return err
 	}
 	err = doc.DataTo(&t.Teacher)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (t *Teacher) GetUpdating() error {
+	doc, err := t.GetWaitUpdateCollection().Doc(t.Username).Get(context.Background())
+	if err != nil {
+		return err
+	}
+	err = doc.DataTo(&t.Teacher)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (t *Teacher) UpdateToWait() error {
+	_, err := t.GetWaitUpdateCollection().Doc(t.Username).Set(context.Background(), data.TeacherUpdate{
+		Teacher:    t.Teacher,
+		UpdateTime: time.Now().Unix(),
+	})
 	if err != nil {
 		return err
 	}

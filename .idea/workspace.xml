@@ -20,26 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e34320fb-6a6e-43eb-89f8-7c80bfd01805" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/middleware/filter_notification.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/reset_pass.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DevNote.txt" beforeDir="false" afterPath="$PROJECT_DIR$/DevNote.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consts/collection.go" beforeDir="false" afterPath="$PROJECT_DIR$/consts/collection.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/notificationcontroller/notification.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/notificationcontroller/notification.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/usercontroller/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/usercontroller/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data/notification.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/data/notification.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/EasyTutor.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/EasyTutor.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middleware/filter.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/filter.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middleware/filter_teacher.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/filter_teacher.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middleware/filter_user.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/filter_user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middleware/token.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/token.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/notification.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/notification.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/commentsRouter_controllers.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/swagger/swagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger/swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/swagger/swagger.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/notificationusecase/notification_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/notificationusecase/notification_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/teacherusecase/post_teacher_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/teacherusecase/post_teacher_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/userusecase/post_user_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/userusecase/post_user_usecase.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

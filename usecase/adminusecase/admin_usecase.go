@@ -9,6 +9,7 @@ type AdminInterface interface {
 	Login(login data.LoginInfo) (string, error)
 	ValidateTeacher(teacherID string) error
 	GetListUnActiveTeacher(pageNumber, pageSize int) ([]*responses.Teacher, int, error)
+	ValidateUpdateTeacher(teacherID string) error
 }
 
 func GetAdminUseCase() AdminInterface {

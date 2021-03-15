@@ -124,6 +124,42 @@
                 }
             }
         },
+        "/admin/updating-teacher/{teacher_id}": {
+            "put": {
+                "tags": [
+                    "admin"
+                ],
+                "description": "get all objects",
+                "operationId": "AdminController.ActiveUser",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "admin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "teacher_id",
+                        "description": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/responses.Teacher"
+                        }
+                    },
+                    "403": {
+                        "description": "is empty"
+                    }
+                }
+            }
+        },
         "/comment/teacher/{teacher_id}": {
             "post": {
                 "tags": [

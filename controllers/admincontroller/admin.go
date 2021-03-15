@@ -79,3 +79,21 @@ func (o *AdminController) ActiveUser() {
 	o.Data["json"] = responses.ResponseBool{Data: true}
 	o.ServeJSON()
 }
+
+// @Title ActiveUser
+// @Description get all objects
+// @Param	token		header	string  true	"admin"
+// @Param	teacher_id	path	string	true	"path"
+// @Success 200 {object} responses.Teacher
+// @Failure 403 is empty
+// @router /updating-teacher/:teacher_id [put]
+func (o *AdminController) UpdateUser() {
+	teacherID := o.GetString(":teacher_id")
+	err := adminusecase.GetAdminUseCase().ValidateUpdateTeacher(teacherID)
+	if myerror.IsError(err) {
+		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
+		return
+	}
+	o.Data["json"] = responses.ResponseBool{Data: true}
+	o.ServeJSON()
+}
