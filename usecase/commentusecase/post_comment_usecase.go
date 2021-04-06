@@ -14,6 +14,10 @@ func (t *commentHandler) CreateOne(username, teacherID string, post requests.Com
 	user := &models.User{}
 	teacher := &models.Teacher{}
 
+	if post.Stars < 1 || post.Stars > 5 {
+		return "", data.NotExisted
+	}
+
 	user.Username = username
 	err := user.Get()
 	if err != nil {
@@ -34,6 +38,7 @@ func (t *commentHandler) CreateOne(username, teacherID string, post requests.Com
 	comment.TeacherID = teacherID
 	comment.Username = username
 	comment.CommentInfo = post.CommentInfo
+	comment.Stars = post.Stars
 	comment.CreateTime = time.Now().Unix()
 
 	id, err := comment.Add()

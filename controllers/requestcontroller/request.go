@@ -205,6 +205,27 @@ func (o *RequestController) Get() {
 	o.ServeJSON()
 }
 
+// @Title DeleteOffer
+// @Description create teacher
+// @Param	token		header	string	true		"string"
+// @Param	offer_id	path 	string	true		"The offer id"
+// @Success 200 {string} id
+// @Failure 403 body is empty
+// @router /offer/:offer_id [delete]
+func (o *RequestController) DeleteOffer() {
+	username := o.Ctx.Input.Header("username")
+	offerID := o.GetString(":offer_id")
+	err := requestusecase.GetRequestUseCase().DeleteOffer(username, offerID)
+	if myerror.IsError(err) {
+		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
+		return
+	}
+	o.Data["json"] = responses.ResponseBool{
+		Data: true,
+	}
+	o.ServeJSON()
+}
+
 // @Title Delete
 // @Description delete the object
 // @Param	token		header 	string				true		"The token"

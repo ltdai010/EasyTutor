@@ -2,7 +2,7 @@ package data
 
 type CommentInfo struct {
 	Comment     string `json:"comment"`
-	Recommended bool   `json:"recommended"`
+	Stars 	    int   `json:"stars"`
 }
 
 type Comment struct {

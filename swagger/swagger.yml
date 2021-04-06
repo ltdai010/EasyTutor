@@ -512,6 +512,28 @@ paths:
           description: '{string} id'
         "403":
           description: body is empty
+  /request/offer/{offer_id}:
+    delete:
+      tags:
+      - request
+      description: create teacher
+      operationId: RequestController.DeleteOffer
+      parameters:
+      - in: header
+        name: token
+        description: string
+        required: true
+        type: string
+      - in: path
+        name: offer_id
+        description: The offer id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} id'
+        "403":
+          description: body is empty
   /search/request:
     get:
       tags:
@@ -977,8 +999,9 @@ definitions:
       create_time:
         type: integer
         format: int64
-      recommended:
-        type: boolean
+      stars:
+        type: integer
+        format: int64
       teacher_id:
         type: string
       username:
@@ -989,8 +1012,9 @@ definitions:
     properties:
       comment:
         type: string
-      recommended:
-        type: boolean
+      stars:
+        type: integer
+        format: int64
   data.LoginInfo:
     title: LoginInfo
     type: object
@@ -1161,16 +1185,18 @@ definitions:
     properties:
       comment:
         type: string
-      recommended:
-        type: boolean
+      stars:
+        type: integer
+        format: int64
   requests.CommentPut:
     title: CommentPut
     type: object
     properties:
       comment:
         type: string
-      recommended:
-        type: boolean
+      stars:
+        type: integer
+        format: int64
   requests.OfferPost:
     title: OfferPost
     type: object
@@ -1468,8 +1494,9 @@ definitions:
         format: int64
       id:
         type: string
-      recommended:
-        type: boolean
+      stars:
+        type: integer
+        format: int64
       teacher_id:
         type: string
       username:

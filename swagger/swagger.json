@@ -560,6 +560,39 @@
                 }
             }
         },
+        "/request/offer/{offer_id}": {
+            "delete": {
+                "tags": [
+                    "request"
+                ],
+                "description": "create teacher",
+                "operationId": "RequestController.DeleteOffer",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "string",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "offer_id",
+                        "description": "The offer id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string} id"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
         "/request/{request_id}": {
             "get": {
                 "tags": [
@@ -1461,8 +1494,9 @@
                     "type": "integer",
                     "format": "int64"
                 },
-                "recommended": {
-                    "type": "boolean"
+                "stars": {
+                    "type": "integer",
+                    "format": "int64"
                 },
                 "teacher_id": {
                     "type": "string"
@@ -1479,8 +1513,9 @@
                 "comment": {
                     "type": "string"
                 },
-                "recommended": {
-                    "type": "boolean"
+                "stars": {
+                    "type": "integer",
+                    "format": "int64"
                 }
             }
         },
@@ -1732,8 +1767,9 @@
                 "comment": {
                     "type": "string"
                 },
-                "recommended": {
-                    "type": "boolean"
+                "stars": {
+                    "type": "integer",
+                    "format": "int64"
                 }
             }
         },
@@ -1744,8 +1780,9 @@
                 "comment": {
                     "type": "string"
                 },
-                "recommended": {
-                    "type": "boolean"
+                "stars": {
+                    "type": "integer",
+                    "format": "int64"
                 }
             }
         },
@@ -2184,8 +2221,9 @@
                 "id": {
                     "type": "string"
                 },
-                "recommended": {
-                    "type": "boolean"
+                "stars": {
+                    "type": "integer",
+                    "format": "int64"
                 },
                 "teacher_id": {
                     "type": "string"

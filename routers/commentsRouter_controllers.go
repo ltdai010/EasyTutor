@@ -205,6 +205,15 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["EasyTutor/controllers/requestcontroller:RequestController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/requestcontroller:RequestController"],
+        beego.ControllerComments{
+            Method: "DeleteOffer",
+            Router: "/offer/:offer_id",
+            AllowHTTPMethods: []string{"delete"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["EasyTutor/controllers/searchcontroller:SearchController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/searchcontroller:SearchController"],
         beego.ControllerComments{
             Method: "SearchRequest",
