@@ -36,12 +36,14 @@ func (t *Request) Add() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	_, err = t.GetSearchIndex().SaveObject(searchdata.RequestSearch{
-		ObjectID: ref.ID,
-		Request:  t.Request,
-	})
-	if err != nil {
-		log.Println(err, " error save search request")
+	if t.Active {
+		_, err = t.GetSearchIndex().SaveObject(searchdata.RequestSearch{
+			ObjectID: ref.ID,
+			Request:  t.Request,
+		})
+		if err != nil {
+			log.Println(err, " error save search request")
+		}
 	}
 	return ref.ID, nil
 }
@@ -63,12 +65,14 @@ func (t *Request) Update() error {
 	if err != nil {
 		return err
 	}
-	_, err = t.GetSearchIndex().SaveObject(searchdata.RequestSearch{
-		ObjectID: t.ID,
-		Request:  t.Request,
-	})
-	if err != nil {
-		log.Println(err, " error update search index")
+	if t.Active {
+		_, err = t.GetSearchIndex().SaveObject(searchdata.RequestSearch{
+			ObjectID: t.ID,
+			Request:  t.Request,
+		})
+		if err != nil {
+			log.Println(err, " error update search index")
+		}
 	}
 	return nil
 }
@@ -85,11 +89,11 @@ func (t *Request) Delete() error {
 	return nil
 }
 
-func (t *Request) GetPage(pageNumber int, pageSize int) ([]*responses.Request, int, error) {
+func (t *Request) GetPageActive(pageNumber int, pageSize int) ([]*responses.Request, int, error) {
 	res := []*responses.Request{}
 	start := pageNumber * pageSize
 	end := (pageNumber + 1) * pageSize
-	list, err := t.GetCollection().DocumentRefs(context.Background()).GetAll()
+	list, err := t.GetCollection().Where("Active", "==", true).Documents(context.Background()).GetAll()
 	if err != nil {
 		return nil, 0, err
 	}
@@ -100,17 +104,40 @@ func (t *Request) GetPage(pageNumber int, pageSize int) ([]*responses.Request, i
 	if end > total {
 		end = total
 	}
-	for _, ref := range list[start:end] {
+	for _, doc := range list[start:end] {
 		request := responses.Request{}
-		doc, err := t.GetCollection().Doc(ref.ID).Get(context.Background())
-		if err != nil {
-			continue
-		}
 		err = doc.DataTo(&request)
 		if err != nil {
 			continue
 		}
-		request.ID = ref.ID
+		request.ID = doc.Ref.ID
+		res = append(res, &request)
+	}
+	return res, total, err
+}
+
+func (t *Request) GetPageUnActive(pageNumber int, pageSize int) ([]*responses.Request, int, error) {
+	res := []*responses.Request{}
+	start := pageNumber * pageSize
+	end := (pageNumber + 1) * pageSize
+	list, err := t.GetCollection().Where("Active", "==", false).Documents(context.Background()).GetAll()
+	if err != nil {
+		return nil, 0, err
+	}
+	total := len(list)
+	if start > total {
+		return res, 0, data.NotMore
+	}
+	if end > total {
+		end = total
+	}
+	for _, doc := range list[start:end] {
+		request := responses.Request{}
+		err = doc.DataTo(&request)
+		if err != nil {
+			continue
+		}
+		request.ID = doc.Ref.ID
 		res = append(res, &request)
 	}
 	return res, total, err

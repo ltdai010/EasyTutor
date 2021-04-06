@@ -29,6 +29,61 @@ paths:
           description: '{string} id'
         "403":
           description: body is empty
+  /admin/unactivated-request:
+    get:
+      tags:
+      - admin
+      description: get all request
+      operationId: AdminController.GetPageRequest
+      parameters:
+      - in: header
+        name: token
+        description: admin
+        required: true
+        type: string
+      - in: query
+        name: page_number
+        description: page number
+        required: true
+        type: integer
+        format: int64
+      - in: query
+        name: page_length
+        description: page length
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/responses.Request'
+        "403":
+          description: is empty
+  /admin/unactivated-request/{request_id}:
+    put:
+      tags:
+      - admin
+      description: get all objects
+      operationId: AdminController.ActiveRequest
+      parameters:
+      - in: header
+        name: token
+        description: admin
+        required: true
+        type: string
+      - in: path
+        name: request_id
+        description: path
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/responses.Request'
+        "403":
+          description: is empty
   /admin/unactivated-teacher:
     get:
       tags:
@@ -89,7 +144,7 @@ paths:
       tags:
       - admin
       description: get all objects
-      operationId: AdminController.ActiveUser
+      operationId: AdminController.UpdateUser
       parameters:
       - in: header
         name: token
@@ -1052,6 +1107,90 @@ definitions:
       offer_price:
         type: integer
         format: int64
+  data.Request:
+    title: Request
+    type: object
+    properties:
+      accept_offer:
+        type: string
+      active:
+        type: boolean
+      create_time:
+        type: integer
+        format: int64
+      description:
+        type: string
+      exact_location:
+        type: string
+      fri_afternoon:
+        type: boolean
+      fri_morning:
+        type: boolean
+      fri_night:
+        type: boolean
+      gender:
+        type: string
+      location:
+        type: integer
+        format: int64
+      method:
+        type: string
+      monday_afternoon:
+        type: boolean
+      monday_morning:
+        type: boolean
+      monday_night:
+        type: boolean
+      number_of_student:
+        type: integer
+        format: int64
+      phone_number:
+        type: string
+      price:
+        type: integer
+        format: int64
+      sat_afternoon:
+        type: boolean
+      sat_morning:
+        type: boolean
+      sat_night:
+        type: boolean
+      subject:
+        type: string
+      sun_afternoon:
+        type: boolean
+      sun_morning:
+        type: boolean
+      sun_night:
+        type: boolean
+      thu_afternoon:
+        type: boolean
+      thu_morning:
+        type: boolean
+      thu_night:
+        type: boolean
+      time:
+        type: integer
+        format: int64
+      times_per_week:
+        type: integer
+        format: int64
+      title:
+        type: string
+      tue_afternoon:
+        type: boolean
+      tue_morning:
+        type: boolean
+      tue_night:
+        type: boolean
+      username:
+        type: string
+      wed_afternoon:
+        type: boolean
+      wed_morning:
+        type: boolean
+      wed_night:
+        type: boolean
   data.RequestInfo:
     title: RequestInfo
     type: object
@@ -1521,6 +1660,92 @@ definitions:
         type: string
       teacher_id:
         type: string
+  responses.Request:
+    title: Request
+    type: object
+    properties:
+      accept_offer:
+        type: string
+      active:
+        type: boolean
+      create_time:
+        type: integer
+        format: int64
+      description:
+        type: string
+      exact_location:
+        type: string
+      fri_afternoon:
+        type: boolean
+      fri_morning:
+        type: boolean
+      fri_night:
+        type: boolean
+      gender:
+        type: string
+      id:
+        type: string
+      location:
+        type: integer
+        format: int64
+      method:
+        type: string
+      monday_afternoon:
+        type: boolean
+      monday_morning:
+        type: boolean
+      monday_night:
+        type: boolean
+      number_of_student:
+        type: integer
+        format: int64
+      phone_number:
+        type: string
+      price:
+        type: integer
+        format: int64
+      sat_afternoon:
+        type: boolean
+      sat_morning:
+        type: boolean
+      sat_night:
+        type: boolean
+      subject:
+        type: string
+      sun_afternoon:
+        type: boolean
+      sun_morning:
+        type: boolean
+      sun_night:
+        type: boolean
+      thu_afternoon:
+        type: boolean
+      thu_morning:
+        type: boolean
+      thu_night:
+        type: boolean
+      time:
+        type: integer
+        format: int64
+      times_per_week:
+        type: integer
+        format: int64
+      title:
+        type: string
+      tue_afternoon:
+        type: boolean
+      tue_morning:
+        type: boolean
+      tue_night:
+        type: boolean
+      username:
+        type: string
+      wed_afternoon:
+        type: boolean
+      wed_morning:
+        type: boolean
+      wed_night:
+        type: boolean
   responses.Teacher:
     title: Teacher
     type: object

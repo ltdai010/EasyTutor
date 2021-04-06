@@ -20,9 +20,9 @@ func (t *requestHandler) GetOne(id string) (*responses.Request, error) {
 	}, data.Success
 }
 
-func (t *requestHandler) GetPage(pageNumber int, pageSize int) ([]*responses.Request, int, error) {
+func (t *requestHandler) GetPageActive(pageNumber int, pageSize int) ([]*responses.Request, int, error) {
 	request := &models.Request{}
-	listRequest, total, err := request.GetPage(pageNumber - 1, pageSize)
+	listRequest, total, err := request.GetPageActive(pageNumber - 1, pageSize)
 	if err != nil {
 		return nil, 0, data.NotMore
 	}

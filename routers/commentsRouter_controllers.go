@@ -18,7 +18,25 @@ func init() {
 
     beego.GlobalControllerRouter["EasyTutor/controllers/admincontroller:AdminController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/admincontroller:AdminController"],
         beego.ControllerComments{
-            Method: "GetPage",
+            Method: "GetPageRequest",
+            Router: "/unactivated-request",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["EasyTutor/controllers/admincontroller:AdminController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/admincontroller:AdminController"],
+        beego.ControllerComments{
+            Method: "ActiveRequest",
+            Router: "/unactivated-request/:request_id",
+            AllowHTTPMethods: []string{"put"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["EasyTutor/controllers/admincontroller:AdminController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/admincontroller:AdminController"],
+        beego.ControllerComments{
+            Method: "GetPageTeacher",
             Router: "/unactivated-teacher",
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),

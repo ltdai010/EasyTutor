@@ -44,13 +44,15 @@ func (t *Teacher) Add() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	_, err = t.GetSearchIndex().SaveObject(searchdata.TeacherSearch{
-		ObjectID:    t.Username,
-		TeacherInfo: t.TeacherInfo,
-		Schedule:	 t.Schedule,
-	})
-	if err != nil {
-		log.Println(err, " error create data search teacher")
+	if t.Active {
+		_, err = t.GetSearchIndex().SaveObject(searchdata.TeacherSearch{
+			ObjectID:    t.Username,
+			TeacherInfo: t.TeacherInfo,
+			Schedule:	 t.Schedule,
+		})
+		if err != nil {
+			log.Println(err, " error create data search teacher")
+		}
 	}
 	return t.Username, nil
 }
@@ -95,13 +97,15 @@ func (t *Teacher) Update() error {
 	if err != nil {
 		return err
 	}
-	_, err = t.GetSearchIndex().SaveObject(searchdata.TeacherSearch{
-		ObjectID:    t.Username,
-		TeacherInfo: t.TeacherInfo,
-		Schedule:    t.Schedule,
-	})
-	if err != nil {
-		log.Println(err, " error update data search teacher")
+	if t.Active {
+		_, err = t.GetSearchIndex().SaveObject(searchdata.TeacherSearch{
+			ObjectID:    t.Username,
+			TeacherInfo: t.TeacherInfo,
+			Schedule:    t.Schedule,
+		})
+		if err != nil {
+			log.Println(err, " error update data search teacher")
+		}
 	}
 	return nil
 }

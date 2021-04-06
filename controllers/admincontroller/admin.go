@@ -47,10 +47,33 @@ func (o *AdminController) Login() {
 // @Success 200 {object} responses.Teacher
 // @Failure 403 is empty
 // @router /unactivated-teacher [get]
-func (o *AdminController) GetPage() {
+func (o *AdminController) GetPageTeacher() {
 	pageNumber, _ := o.GetInt("page_number", 0)
 	pageLength, _ := o.GetInt("page_length", 0)
 	obs, total, err := adminusecase.GetAdminUseCase().GetListUnActiveTeacher(pageNumber, pageLength)
+	if myerror.IsError(err) {
+		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
+		return
+	}
+	o.Data["json"] = responses.ResponseCommonArray{
+		Data:       obs,
+		TotalCount: total,
+	}
+	o.ServeJSON()
+}
+
+// @Title GetPageRequest
+// @Description get all request
+// @Param	token		header	string  true	"admin"
+// @Param	page_number	query	int	true	"page number"
+// @Param	page_length	query	int	true	"page length"
+// @Success 200 {object} responses.Request
+// @Failure 403 is empty
+// @router /unactivated-request [get]
+func (o *AdminController) GetPageRequest() {
+	pageNumber, _ := o.GetInt("page_number", 0)
+	pageLength, _ := o.GetInt("page_length", 0)
+	obs, total, err := adminusecase.GetAdminUseCase().GetListUnActiveRequest(pageNumber, pageLength)
 	if myerror.IsError(err) {
 		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
 		return
@@ -80,7 +103,26 @@ func (o *AdminController) ActiveUser() {
 	o.ServeJSON()
 }
 
-// @Title ActiveUser
+// @Title ActiveRequest
+// @Description get all objects
+// @Param	token		header	string  true	"admin"
+// @Param	request_id	path	string	true	"path"
+// @Success 200 {object} responses.Request
+// @Failure 403 is empty
+// @router /unactivated-request/:request_id [put]
+func (o *AdminController) ActiveRequest() {
+	requestID := o.GetString(":request_id")
+	err := adminusecase.GetAdminUseCase().ValidateRequest(requestID)
+	if myerror.IsError(err) {
+		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
+		return
+	}
+	o.Data["json"] = responses.ResponseBool{Data: true}
+	o.ServeJSON()
+}
+
+
+// @Title UpdateUser
 // @Description get all objects
 // @Param	token		header	string  true	"admin"
 // @Param	teacher_id	path	string	true	"path"

@@ -5,6 +5,7 @@ type Request struct {
 	Username    string `json:"username"`
 	AcceptOffer string `json:"accept_offer"`
 	CreateTime  int64  `json:"create_time"`
+	Active      bool   `json:"active"`
 	Schedule
 }
 

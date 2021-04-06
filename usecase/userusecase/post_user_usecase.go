@@ -45,7 +45,6 @@ func (t *userHandler) CreateOne(request requests.UserPost) (string, error) {
 
 func (t *userHandler) Login(login data.LoginInfo) (string, error) {
 	user := &models.User{}
-	log.Println(login)
 	user.Username = login.Username
 
 	err := user.Get()

@@ -14,3 +14,12 @@ func (a *adminHandler) GetListUnActiveTeacher(pageNumber, pageSize int) ([]*resp
 	}
 	return res, total, data.Success
 }
+
+func (t *adminHandler) GetListUnActiveRequest(pageNumber int, pageSize int) ([]*responses.Request, int, error) {
+	request := &models.Request{}
+	listRequest, total, err := request.GetPageUnActive(pageNumber - 1, pageSize)
+	if err != nil {
+		return nil, 0, data.NotMore
+	}
+	return listRequest, total, data.Success
+}

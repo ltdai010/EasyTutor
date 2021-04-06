@@ -7,7 +7,7 @@ import (
 
 type RequestInterface interface {
 	CreateOne(username string, post requests.RequestPost) (string, error)
-	GetPage(pageNumber int, pageSize int) ([]*responses.Request, int, error)
+	GetPageActive(pageNumber int, pageSize int) ([]*responses.Request, int, error)
 	GetOne(id string) (*responses.Request, error)
 	UpdateOne(username, id string, put requests.RequestPut) error
 	RemoveOne(username, id string) error

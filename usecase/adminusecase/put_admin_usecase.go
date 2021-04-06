@@ -45,3 +45,19 @@ func (a *adminHandler) ValidateUpdateTeacher(teacherID string) error {
 	}
 	return data.Success
 }
+
+func (a *adminHandler) ValidateRequest(requestID string) error {
+	request := &models.Request{}
+	request.ID = requestID
+	err := request.Get()
+	if err != nil {
+		return data.NotExisted
+	}
+	request.Active = true
+	err = request.Update()
+	if err != nil {
+		return data.ErrSystem
+	}
+
+	return data.Success
+}

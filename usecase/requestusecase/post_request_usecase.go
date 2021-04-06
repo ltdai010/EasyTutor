@@ -16,6 +16,7 @@ func (t *requestHandler) CreateOne(username string, post requests.RequestPost) (
 
 	request.Username = username
 	request.AcceptOffer = ""
+	request.Active = false
 	request.RequestInfo = post.RequestInfo
 	request.CreateTime = time.Now().Unix()
 	request.Schedule = post.Schedule

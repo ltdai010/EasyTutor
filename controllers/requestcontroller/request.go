@@ -143,7 +143,7 @@ func (o *RequestController) AcceptOffer() {
 func (o *RequestController) GetPage() {
 	pageNumber, _ := o.GetInt("page_number", 0)
 	pageLength, _ := o.GetInt("page_length", 0)
-	obs, total, err := requestusecase.GetRequestUseCase().GetPage(pageNumber, pageLength)
+	obs, total, err := requestusecase.GetRequestUseCase().GetPageActive(pageNumber, pageLength)
 	if myerror.IsError(err) {
 		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
 		return
