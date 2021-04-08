@@ -20,22 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e34320fb-6a6e-43eb-89f8-7c80bfd01805" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/controllers/admincontroller/admin.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/admincontroller/admin.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/teachercontroller/teacher.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/teachercontroller/teacher.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data/comment.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/data/comment.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/rest/responses/comment.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/rest/responses/comment.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/EasyTutor.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/EasyTutor.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/comment.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/comment.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/offer.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/offer.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/commentsRouter_controllers.go" beforeDir="false" afterPath="$PROJECT_DIR$/routers/commentsRouter_controllers.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/swagger/swagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger/swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/swagger/swagger.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/adminusecase/admin_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/adminusecase/admin_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/adminusecase/get_admin_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/adminusecase/get_admin_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/adminusecase/put_admin_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/adminusecase/put_admin_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/commentusecase/get_comment_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/commentusecase/get_comment_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/offerusecase/get_offer_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/offerusecase/get_offer_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/offerusecase/offer_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/offerusecase/offer_usecase.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
