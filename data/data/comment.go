@@ -10,4 +10,5 @@ type Comment struct {
 	Username   string `json:"username"`
 	TeacherID  string `json:"teacher_id"`
 	CreateTime int64  `json:"create_time"`
+	Active     bool   `json:"active"`
 }

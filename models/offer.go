@@ -76,3 +76,21 @@ func (t *Offer) GetOfferOfRequest(requestID string) ([]*responses.Offer, error) 
 	}
 	return res, nil
 }
+
+func (t *Offer) GetOfferOfTeacher(teacherID string) ([]*responses.Offer, error) {
+	res := []*responses.Offer{}
+	docs, err := t.GetCollection().Where("TeacherID", "==", teacherID).Documents(context.Background()).GetAll()
+	if err != nil {
+		return nil, err
+	}
+	for _, doc := range docs {
+		offer := responses.Offer{}
+		err = doc.DataTo(&offer)
+		if err != nil {
+			continue
+		}
+		offer.ID = doc.Ref.ID
+		res = append(res, &offer)
+	}
+	return res, nil
+}

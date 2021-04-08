@@ -21,7 +21,7 @@ func (t *commentHandler) GetOne(id string) (*responses.Comment, error) {
 
 func (t *commentHandler) GetCommentOfTeacher(teacherID string) ([]*responses.Comment, error) {
 	comment := &models.Comment{}
-	listComment, err := comment.GetCommentOfTeacher(teacherID)
+	listComment, err := comment.GetActiveCommentOfTeacher(teacherID)
 	if err != nil {
 		return nil, data.NotMore
 	}

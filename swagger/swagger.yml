@@ -29,6 +29,49 @@ paths:
           description: '{string} id'
         "403":
           description: body is empty
+  /admin/unactivated-comment:
+    get:
+      tags:
+      - admin
+      description: get all comment
+      operationId: AdminController.GetComment
+      parameters:
+      - in: header
+        name: token
+        description: admin
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/responses.TeacherComment'
+        "403":
+          description: is empty
+  /admin/unactivated-comment/{comment_id}:
+    put:
+      tags:
+      - admin
+      description: get all objects
+      operationId: AdminController.ActiveComment
+      parameters:
+      - in: header
+        name: token
+        description: admin
+        required: true
+        type: string
+      - in: path
+        name: comment_id
+        description: path
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/responses.Comment'
+        "403":
+          description: is empty
   /admin/unactivated-request:
     get:
       tags:
@@ -866,6 +909,19 @@ paths:
           description: '{string} id'
         "403":
           description: body is empty
+  /teacher/my-offer:
+    get:
+      tags:
+      - teacher
+      description: find object by objectid
+      operationId: TeacherController.Get
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/responses.Offer'
+        "403":
+          description: :teacher_id is empty
   /teacher/reset-pass:
     post:
       tags:
@@ -1049,6 +1105,8 @@ definitions:
     title: Comment
     type: object
     properties:
+      active:
+        type: boolean
       comment:
         type: string
       create_time:
@@ -1626,6 +1684,8 @@ definitions:
     title: Comment
     type: object
     properties:
+      active:
+        type: boolean
       comment:
         type: string
       create_time:
@@ -1828,6 +1888,18 @@ definitions:
         type: boolean
       wed_night:
         type: boolean
+  responses.TeacherComment:
+    title: TeacherComment
+    type: object
+    properties:
+      list_un_active_comment:
+        type: array
+        items:
+          $ref: '#/definitions/responses.Comment'
+      name:
+        type: string
+      teacher_id:
+        type: string
   responses.TeacherSearch:
     title: TeacherSearch
     type: object

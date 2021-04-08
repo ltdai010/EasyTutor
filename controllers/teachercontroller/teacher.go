@@ -5,6 +5,7 @@ import (
 	"EasyTutor/data/rest/requests"
 	"EasyTutor/data/rest/responses"
 	"EasyTutor/usecase/commentusecase"
+	"EasyTutor/usecase/offerusecase"
 	"EasyTutor/usecase/teacherusecase"
 	"EasyTutor/utils/myerror"
 	"encoding/json"
@@ -96,6 +97,27 @@ func (o *TeacherController) Get() {
 		return
 	}
 	ob, err := teacherusecase.GetTeacherUseCase().GetOne(teacherID)
+	if myerror.IsError(err) {
+		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
+		return
+	} else {
+		o.Data["json"] = responses.ResponseCommonSingle{Data: ob}
+		o.ServeJSON()
+	}
+}
+
+// @Title Get
+// @Description find object by objectid
+// @Success 200 {object} responses.Offer
+// @Failure 403 :teacher_id is empty
+// @router /my-offer [get]
+func (o *TeacherController) GetRequest() {
+	teacherID := o.Ctx.Input.Header(":teacher_id")
+	if teacherID == "" {
+		o.Ctx.Output.SetStatus(400)
+		return
+	}
+	ob, err := offerusecase.GetOfferUseCase().GetOfferOfTeacher(teacherID)
 	if myerror.IsError(err) {
 		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
 		return

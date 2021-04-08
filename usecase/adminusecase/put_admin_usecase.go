@@ -4,6 +4,7 @@ import (
 	"EasyTutor/data/data"
 	"EasyTutor/models"
 	"EasyTutor/utils/logger"
+	"log"
 )
 
 func (a *adminHandler) ValidateTeacher(teacherID string) error {
@@ -55,6 +56,23 @@ func (a *adminHandler) ValidateRequest(requestID string) error {
 	}
 	request.Active = true
 	err = request.Update()
+	if err != nil {
+		return data.ErrSystem
+	}
+
+	return data.Success
+}
+
+func (a *adminHandler) ValidateComment(commentID string) error {
+	comment := &models.Comment{}
+	comment.ID = commentID
+	err := comment.Get()
+	if err != nil {
+		log.Println(err, " usecase/adminusecase/put_admin_usecase.go:71")
+		return data.NotExisted
+	}
+	comment.Active = true
+	err = comment.Update()
 	if err != nil {
 		return data.ErrSystem
 	}

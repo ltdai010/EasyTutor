@@ -7,6 +7,7 @@ import (
 	"EasyTutor/drivers"
 	"cloud.google.com/go/firestore"
 	"context"
+	"log"
 )
 
 type Comment struct {
@@ -58,10 +59,30 @@ func (t *Comment) Delete() error {
 	return nil
 }
 
-func (t *Comment) GetCommentOfTeacher(teacherID string) ([]*responses.Comment, error) {
+func (t *Comment) GetActiveCommentOfTeacher(teacherID string) ([]*responses.Comment, error) {
 	res := []*responses.Comment{}
 	docs, err := t.GetCollection().Where("TeacherID", "==", teacherID).Documents(context.Background()).GetAll()
 	if err != nil {
+		return res, err
+	}
+	for _, doc := range docs {
+		comment := responses.Comment{}
+		err = doc.DataTo(&comment)
+		if err != nil || !comment.Active {
+			continue
+		}
+		comment.ID = doc.Ref.ID
+		res = append(res, &comment)
+	}
+	return res, nil
+}
+
+func (t *Comment) GetUnActiveCommentOfAll() ([]*responses.TeacherComment, error) {
+	result := map[string][]*responses.Comment{}
+	res := []*responses.TeacherComment{}
+	docs, err := t.GetCollection().Where("Active", "==", false).Documents(context.Background()).GetAll()
+	if err != nil {
+		log.Println(err)
 		return res, err
 	}
 	for _, doc := range docs {
@@ -71,7 +92,30 @@ func (t *Comment) GetCommentOfTeacher(teacherID string) ([]*responses.Comment, e
 			continue
 		}
 		comment.ID = doc.Ref.ID
-		res = append(res, &comment)
+		if result[comment.TeacherID] == nil {
+			result[comment.TeacherID] = []*responses.Comment{}
+		}
+		result[comment.TeacherID] = append(result[comment.TeacherID], &comment)
 	}
+	//convert
+	for teacherID, listComment := range result {
+		doc, err := (&Teacher{}).GetCollection().Doc(teacherID).Get(context.Background())
+		if err != nil {
+			log.Println(err)
+			continue
+		}
+		teacher := Teacher{}
+		err = doc.DataTo(&teacher)
+		if err != nil {
+			log.Println(err)
+			continue
+		}
+		res = append(res, &responses.TeacherComment{
+			TeacherID:           teacher.Username,
+			Name:                teacher.Name,
+			ListUnActiveComment: listComment,
+		})
+	}
+
 	return res, nil
 }

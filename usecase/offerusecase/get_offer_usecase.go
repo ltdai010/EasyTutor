@@ -27,3 +27,12 @@ func (t *offerHandler) GetOfferOfRequest(requestID string) ([]*responses.Offer, 
 	}
 	return listOffer, data.Success
 }
+
+func (t *offerHandler) GetOfferOfTeacher(teacherID string) ([]*responses.Offer, error) {
+	offer := &models.Offer{}
+	listOffer, err := offer.GetOfferOfTeacher(teacherID)
+	if err != nil {
+		return nil, data.NotMore
+	}
+	return listOffer, data.Success
+}

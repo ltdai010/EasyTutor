@@ -85,6 +85,25 @@ func (o *AdminController) GetPageRequest() {
 	o.ServeJSON()
 }
 
+// @Title GetComment
+// @Description get all comment
+// @Param	token		header	string  true	"admin"
+// @Success 200 {object} responses.TeacherComment
+// @Failure 403 is empty
+// @router /unactivated-comment [get]
+func (o *AdminController) GetComment() {
+	obs, err := adminusecase.GetAdminUseCase().GetAllUnActiveComment()
+	if myerror.IsError(err) {
+		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
+		return
+	}
+	o.Data["json"] = responses.ResponseCommonArray{
+		Data:       obs,
+		TotalCount: len(obs),
+	}
+	o.ServeJSON()
+}
+
 // @Title ActiveUser
 // @Description get all objects
 // @Param	token		header	string  true	"admin"
@@ -113,6 +132,24 @@ func (o *AdminController) ActiveUser() {
 func (o *AdminController) ActiveRequest() {
 	requestID := o.GetString(":request_id")
 	err := adminusecase.GetAdminUseCase().ValidateRequest(requestID)
+	if myerror.IsError(err) {
+		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
+		return
+	}
+	o.Data["json"] = responses.ResponseBool{Data: true}
+	o.ServeJSON()
+}
+
+// @Title ActiveComment
+// @Description get all objects
+// @Param	token		header	string  true	"admin"
+// @Param	comment_id	path	string	true	"path"
+// @Success 200 {object} responses.Comment
+// @Failure 403 is empty
+// @router /unactivated-comment/:comment_id [put]
+func (o *AdminController) ActiveComment() {
+	commentID := o.GetString(":comment_id")
+	err := adminusecase.GetAdminUseCase().ValidateComment(commentID)
 	if myerror.IsError(err) {
 		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
 		return

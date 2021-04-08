@@ -23,3 +23,12 @@ func (t *adminHandler) GetListUnActiveRequest(pageNumber int, pageSize int) ([]*
 	}
 	return listRequest, total, data.Success
 }
+
+func (t *adminHandler) GetAllUnActiveComment() ([]*responses.TeacherComment, error) {
+	comment := &models.Comment{}
+	teacherComment, err := comment.GetUnActiveCommentOfAll()
+	if err != nil {
+		return nil, data.NotMore
+	}
+	return teacherComment, data.Success
+}
