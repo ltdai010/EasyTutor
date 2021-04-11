@@ -185,9 +185,65 @@ func (o *RequestController) Put() {
 }
 
 // @Title Update
+// @Description open the request
+// @Param	token		header 	string				true		"The token"
+// @Param	request_id	path	string				true		"the request_id"
+// @Success 200 {string} success
+// @Failure 403  is empty
+// @router /:request_id/open [put]
+func (o *RequestController) Open() {
+	username := o.Ctx.Input.Header("username")
+	requestID := o.GetString(":request_id")
+	body := requests.RequestPut{}
+
+	err := json.Unmarshal(o.Ctx.Input.RequestBody, &body)
+	if err != nil {
+		o.Ctx.Output.SetStatus(400)
+		return
+	}
+	err = requestusecase.GetRequestUseCase().OpenRequest(username, requestID)
+	if myerror.IsError(err) {
+		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
+		return
+	}
+	o.Data["json"] = responses.ResponseBool{
+		Data:       true,
+	}
+	o.ServeJSON()
+}
+
+// @Title Close
 // @Description update the object
 // @Param	token		header 	string				true		"The token"
 // @Param	request_id	path	string				true		"the request_id"
+// @Success 200 {string} success
+// @Failure 403  is empty
+// @router /:request_id/close [put]
+func (o *RequestController) Close() {
+	username := o.Ctx.Input.Header("username")
+	requestID := o.GetString(":request_id")
+	body := requests.RequestPut{}
+
+	err := json.Unmarshal(o.Ctx.Input.RequestBody, &body)
+	if err != nil {
+		o.Ctx.Output.SetStatus(400)
+		return
+	}
+	err = requestusecase.GetRequestUseCase().CloseRequest(username, requestID)
+	if myerror.IsError(err) {
+		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
+		return
+	}
+	o.Data["json"] = responses.ResponseBool{
+		Data:       true,
+	}
+	o.ServeJSON()
+}
+
+// @Title Get
+// @Description update the object
+// @Param	token		header 	string		true		"The token"
+// @Param	request_id	path	string		true		"the request_id"
 // @Success 200 {string} success
 // @Failure 403  is empty
 // @router /:request_id [get]
@@ -195,6 +251,26 @@ func (o *RequestController) Get() {
 	requestID := o.GetString(":request_id")
 
 	ob, err := requestusecase.GetRequestUseCase().GetOne(requestID)
+	if myerror.IsError(err) {
+		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
+		return
+	}
+	o.Data["json"] = responses.ResponseCommonSingle{
+		Data:       ob,
+	}
+	o.ServeJSON()
+}
+
+// @Title Get
+// @Description get user's requests
+// @Param	token		header 	string		true		"The token"
+// @Success 200 {string} success
+// @Failure 403  is empty
+// @router /user/request [get]
+func (o *RequestController) GetUserRequest() {
+	username := o.Ctx.Input.Header("username")
+
+	ob, err := requestusecase.GetRequestUseCase().GetAllRequestOfUser(username)
 	if myerror.IsError(err) {
 		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
 		return
@@ -252,3 +328,4 @@ func (o *RequestController) Delete() {
 	}
 	o.ServeJSON()
 }
+

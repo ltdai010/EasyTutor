@@ -15,7 +15,7 @@ func (t *offerHandler) CreateOne(teacherID, requestID string, post requests.Offe
 
 	teacher.Username = teacherID
 	err := teacher.Get()
-	if err != nil {
+	if err != nil || !teacher.Active {
 		return "", data.NotExisted
 	}
 

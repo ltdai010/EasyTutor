@@ -181,7 +181,7 @@ func (t *Teacher) Search(key string, location, pageNumber, pageSize int,
 	res := []*responses.TeacherSearch{}
 	searchResult := search.QueryRes{}
 	var err error
-	filters := ""
+	filters := "active:'true' AND "
 	if location > 0 {
 		filters += "location:'" + fmt.Sprint(location) + "'"
 	}

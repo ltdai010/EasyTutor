@@ -35,7 +35,7 @@ func (t *requestHandler) FindAvailableTeacher(requestID string) ([]*responses.Te
 
 	request.ID = requestID
 	err := request.Get()
-	if err != nil {
+	if err != nil || !request.Active || request.Closed {
 		return nil, data.NotExisted
 	}
 
@@ -63,4 +63,12 @@ func filterSchedule(teachers []*responses.TeacherSearch, schedule data.Schedule)
 	}
 
 	return res, data.Success
+}
+
+func (t *requestHandler) GetAllRequestOfUser(username string) ([]*responses.Request, error) {
+	list, err := (&models.Request{}).GetAllOfUser(username)
+	if err != nil {
+		return nil, data.NotMore
+	}
+	return list, data.Success
 }

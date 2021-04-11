@@ -20,6 +20,7 @@ func (t *requestHandler) CreateOne(username string, post requests.RequestPost) (
 	request.RequestInfo = post.RequestInfo
 	request.CreateTime = time.Now().Unix()
 	request.Schedule = post.Schedule
+	request.Closed = false
 
 	id, err := request.Add()
 	if err != nil {

@@ -14,7 +14,7 @@ func (t *requestHandler) UpdateOne(username, id string, put requests.RequestPut)
 	request := &models.Request{}
 	request.ID = id
 	err := request.Get()
-	if myerror.IsError(err) {
+	if myerror.IsError(err) || request.Closed || !request.Active {
 		return data.NotExisted
 	}
 
@@ -55,7 +55,7 @@ func (t *requestHandler) AcceptOffer(username, offerID string) error {
 
 	request.ID = offer.RequestID
 	err = request.Get()
-	if err != nil {
+	if err != nil || request.Closed || !request.Active{
 		return data.NotExisted
 	}
 
@@ -92,5 +92,61 @@ func (t *requestHandler) AcceptOffer(username, offerID string) error {
 		},
 		CreateTime: time.Now().Unix(),
 	})
+	return data.Success
+}
+
+func (r *requestHandler) CloseRequest(username, requestID string) error {
+	//var
+	user := &models.User{}
+	user.Username = username
+	err := user.Get()
+	if err != nil {
+		return data.NotExisted
+	}
+
+	request := &models.Request{ID : requestID}
+	err = request.Get()
+	if err != nil || !request.Active {
+		return data.NotExisted
+	}
+
+	if request.Username != username {
+		return data.NotPermission
+	}
+
+	request.Closed = true
+	err = request.Update()
+	if err != nil {
+		return data.ErrSystem
+	}
+
+	return data.Success
+}
+
+func (r *requestHandler) OpenRequest(username, requestID string) error {
+	//var
+	user := &models.User{}
+	user.Username = username
+	err := user.Get()
+	if err != nil {
+		return data.NotExisted
+	}
+
+	request := &models.Request{ID : requestID}
+	err = request.Get()
+	if err != nil || !request.Active{
+		return data.NotExisted
+	}
+
+	if request.Username != username {
+		return data.NotPermission
+	}
+
+	request.Closed = false
+	err = request.Update()
+	if err != nil {
+		return data.ErrSystem
+	}
+
 	return data.Success
 }

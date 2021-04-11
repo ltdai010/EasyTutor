@@ -458,7 +458,7 @@ paths:
       tags:
       - request
       description: update the object
-      operationId: RequestController.Update
+      operationId: RequestController.Get
       parameters:
       - in: header
         name: token
@@ -542,6 +542,28 @@ paths:
             $ref: '#/definitions/responses.TeacherSearch'
         "403":
           description: is empty
+  /request/{request_id}/close:
+    put:
+      tags:
+      - request
+      description: update the object
+      operationId: RequestController.Close
+      parameters:
+      - in: header
+        name: token
+        description: The token
+        required: true
+        type: string
+      - in: path
+        name: request_id
+        description: the request_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} success'
+        "403":
+          description: is empty
   /request/{request_id}/offer:
     get:
       tags:
@@ -588,6 +610,28 @@ paths:
           description: '{string} id'
         "403":
           description: body is empty
+  /request/{request_id}/open:
+    put:
+      tags:
+      - request
+      description: open the request
+      operationId: RequestController.Update
+      parameters:
+      - in: header
+        name: token
+        description: The token
+        required: true
+        type: string
+      - in: path
+        name: request_id
+        description: the request_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} success'
+        "403":
+          description: is empty
   /request/accepted-offer/{offer_id}:
     put:
       tags:
@@ -632,6 +676,23 @@ paths:
           description: '{string} id'
         "403":
           description: body is empty
+  /request/user/request:
+    get:
+      tags:
+      - request
+      description: get user's requests
+      operationId: RequestController.Get
+      parameters:
+      - in: header
+        name: token
+        description: The token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} success'
+        "403":
+          description: is empty
   /search/request:
     get:
       tags:
@@ -1172,6 +1233,8 @@ definitions:
       accept_offer:
         type: string
       active:
+        type: boolean
+      closed:
         type: boolean
       create_time:
         type: integer
@@ -1727,6 +1790,8 @@ definitions:
       accept_offer:
         type: string
       active:
+        type: boolean
+      closed:
         type: boolean
       create_time:
         type: integer

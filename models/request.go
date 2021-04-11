@@ -93,8 +93,10 @@ func (t *Request) GetPageActive(pageNumber int, pageSize int) ([]*responses.Requ
 	res := []*responses.Request{}
 	start := pageNumber * pageSize
 	end := (pageNumber + 1) * pageSize
-	list, err := t.GetCollection().Where("Active", "==", true).Documents(context.Background()).GetAll()
+	list, err := t.GetCollection().Where("Active", "==", true).Where("Closed", "==", false).
+		Documents(context.Background()).GetAll()
 	if err != nil {
+		log.Println(err)
 		return nil, 0, err
 	}
 	total := len(list)
@@ -114,6 +116,26 @@ func (t *Request) GetPageActive(pageNumber int, pageSize int) ([]*responses.Requ
 		res = append(res, &request)
 	}
 	return res, total, err
+}
+
+func (t *Request) GetAllOfUser(username string) ([]*responses.Request, error) {
+	res := []*responses.Request{}
+	list, err := t.GetCollection().Where("Username", "==", username).Documents(context.Background()).GetAll()
+	if err != nil {
+		log.Println(err)
+		return nil, data.NotMore
+	}
+
+	for _, doc := range list {
+		request := responses.Request{}
+		err = doc.DataTo(&request)
+		if err != nil {
+			continue
+		}
+		request.ID = doc.Ref.ID
+		res = append(res, &request)
+	}
+	return res, err
 }
 
 func (t *Request) GetPageUnActive(pageNumber int, pageSize int) ([]*responses.Request, int, error) {
@@ -148,9 +170,9 @@ func (t *Request) Search(key string, location, pageNumber, pageSize int,
 	res := []*responses.RequestSearch{}
 	searchResult := search.QueryRes{}
 	var err error
-	filters := ""
+	filters := "active:'true'"
 	if location > 0 {
-		filters += "location:'" + fmt.Sprint(location) + "'"
+		filters += " AND location:'" + fmt.Sprint(location) + "'"
 	}
 	if len(subjects) > 0 {
 		if filters != "" {
