@@ -315,18 +315,18 @@ func init() {
 
     beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"],
         beego.ControllerComments{
-            Method: "Put",
+            Method: "GetPage",
             Router: "/",
-            AllowHTTPMethods: []string{"put"},
+            AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
             Params: nil})
 
     beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"],
         beego.ControllerComments{
-            Method: "GetPage",
+            Method: "Put",
             Router: "/",
-            AllowHTTPMethods: []string{"get"},
+            AllowHTTPMethods: []string{"put"},
             MethodParams: param.Make(),
             Filters: nil,
             Params: nil})
@@ -360,6 +360,24 @@ func init() {
 
     beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"],
         beego.ControllerComments{
+            Method: "GetOffer",
+            Router: "/data/my-offer/",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"],
+        beego.ControllerComments{
+            Method: "GetTeacherInfo",
+            Router: "/data/profile/",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"],
+        beego.ControllerComments{
             Method: "ForgotPass",
             Router: "/forgot-password",
             AllowHTTPMethods: []string{"post"},
@@ -372,15 +390,6 @@ func init() {
             Method: "Login",
             Router: "/login",
             AllowHTTPMethods: []string{"post"},
-            MethodParams: param.Make(),
-            Filters: nil,
-            Params: nil})
-
-    beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/teachercontroller:TeacherController"],
-        beego.ControllerComments{
-            Method: "GetRequest",
-            Router: "/my-offer",
-            AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
             Params: nil})
@@ -434,6 +443,15 @@ func init() {
         beego.ControllerComments{
             Method: "Get",
             Router: "/:user_id",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["EasyTutor/controllers/usercontroller:UserController"] = append(beego.GlobalControllerRouter["EasyTutor/controllers/usercontroller:UserController"],
+        beego.ControllerComments{
+            Method: "GetUserInfo",
+            Router: "/data/profile/",
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,

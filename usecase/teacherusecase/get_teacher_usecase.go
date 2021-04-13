@@ -55,3 +55,16 @@ func filterSchedule(requests []*responses.RequestSearch, schedule data.Schedule)
 	}
 	return res, data.Success
 }
+
+func (t *teacherHandler) Profile(username string) (*responses.Teacher, error) {
+	teacher := &models.Teacher{}
+	teacher.Username = username
+	err := teacher.Get()
+	if err != nil {
+		return nil, data.NotExisted
+	}
+	return &responses.Teacher{
+		Username: username,
+		TeacherInfo: teacher.TeacherInfo,
+	}, data.Success
+}

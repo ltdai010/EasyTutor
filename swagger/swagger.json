@@ -1307,6 +1307,64 @@
                 }
             }
         },
+        "/teacher/data/my-offer/": {
+            "get": {
+                "tags": [
+                    "teacher"
+                ],
+                "description": "find object by objectid",
+                "operationId": "TeacherController.GetOffer",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/responses.Offer"
+                        }
+                    },
+                    "403": {
+                        "description": ":teacher_id is empty"
+                    }
+                }
+            }
+        },
+        "/teacher/data/profile/": {
+            "get": {
+                "tags": [
+                    "teacher"
+                ],
+                "description": "find object by teacherID",
+                "operationId": "TeacherController.GetTeacherInfo",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/responses.Teacher"
+                        }
+                    },
+                    "403": {
+                        "description": ":teacher_id is empty"
+                    }
+                }
+            }
+        },
         "/teacher/forgot-password": {
             "post": {
                 "tags": [
@@ -1357,26 +1415,6 @@
                     },
                     "403": {
                         "description": "body is empty"
-                    }
-                }
-            }
-        },
-        "/teacher/my-offer": {
-            "get": {
-                "tags": [
-                    "teacher"
-                ],
-                "description": "find object by objectid",
-                "operationId": "TeacherController.Get",
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/responses.Offer"
-                        }
-                    },
-                    "403": {
-                        "description": ":teacher_id is empty"
                     }
                 }
             }
@@ -1624,6 +1662,35 @@
                     },
                     "403": {
                         "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/user/data/profile/": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "description": "find object by teacherID",
+                "operationId": "UserController.GetTeacherInfo",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/responses.Teacher"
+                        }
+                    },
+                    "403": {
+                        "description": ":teacher_id is empty"
                     }
                 }
             }

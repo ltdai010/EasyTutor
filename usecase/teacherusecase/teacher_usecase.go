@@ -12,8 +12,9 @@ type TeacherInterface interface {
 	GetOne(id string) (*responses.Teacher, error)
 	UpdateOne(id string, put requests.TeacherPut) error
 	RemoveOne(id string) error
-	Login(login data.LoginInfo) (string, error)
+	Login(login data.LoginInfo) (*responses.TeacherLogin, error)
 	FindAvailableRequest(teacherID string) ([]*responses.RequestSearch, error)
+	Profile(username string) (*responses.Teacher, error)
 	UpdateSchedule(id string, put data.Schedule) error
 	ForgotPassword(username string) error
 	ValidateResetCode(request requests.ResetPass) error

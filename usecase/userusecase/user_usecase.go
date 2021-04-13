@@ -13,7 +13,8 @@ type UserInterface interface {
 	UpdateOne(id string, put requests.UserPut) error
 	RemoveOne(id string) error
 	ForgotPassword(username string) error
-	Login(login data.LoginInfo) (string, error)
+	Login(login data.LoginInfo) (*responses.UserLogin, error)
+	Profile(username string) (*responses.User, error)
 	ValidateResetCode(request requests.ResetPass) error
 }
 

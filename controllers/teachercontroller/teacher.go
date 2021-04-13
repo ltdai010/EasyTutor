@@ -106,13 +106,36 @@ func (o *TeacherController) Get() {
 	}
 }
 
-// @Title Get
+// @Title GetTeacherInfo
+// @Description find object by teacherID
+// @Param	token	header	string	true	"token"
+// @Success 200 {object} responses.Teacher
+// @Failure 403 :teacher_id is empty
+// @router /data/profile/ [get]
+func (o *TeacherController) GetTeacherInfo() {
+	teacherID := o.Ctx.Input.Header("teacher_id")
+	if teacherID == "" {
+		o.Ctx.Output.SetStatus(400)
+		return
+	}
+	ob, err := teacherusecase.GetTeacherUseCase().Profile(teacherID)
+	if myerror.IsError(err) {
+		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
+		return
+	} else {
+		o.Data["json"] = responses.ResponseCommonSingle{Data: ob}
+		o.ServeJSON()
+	}
+}
+
+// @Title GetOffer
 // @Description find object by objectid
+// @Param	token	header	string	true	"token"
 // @Success 200 {object} responses.Offer
 // @Failure 403 :teacher_id is empty
-// @router /my-offer [get]
-func (o *TeacherController) GetRequest() {
-	teacherID := o.Ctx.Input.Header(":teacher_id")
+// @router /data/my-offer/ [get]
+func (o *TeacherController) GetOffer() {
+	teacherID := o.Ctx.Input.Header("teacher_id")
 	if teacherID == "" {
 		o.Ctx.Output.SetStatus(400)
 		return

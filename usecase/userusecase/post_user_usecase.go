@@ -3,6 +3,7 @@ package userusecase
 import (
 	"EasyTutor/data/data"
 	"EasyTutor/data/rest/requests"
+	"EasyTutor/data/rest/responses"
 	"EasyTutor/middleware"
 	"EasyTutor/models"
 	"fmt"
@@ -43,25 +44,29 @@ func (t *userHandler) CreateOne(request requests.UserPost) (string, error) {
 	return id, data.Success
 }
 
-func (t *userHandler) Login(login data.LoginInfo) (string, error) {
+func (t *userHandler) Login(login data.LoginInfo) (*responses.UserLogin, error) {
 	user := &models.User{}
 	user.Username = login.Username
 
 	err := user.Get()
 	if err != nil {
-		return "", data.NotExisted
+		return nil, data.NotExisted
 	}
 
 	if err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(login.Password)); err != nil {
-		return "", data.BadRequest
+		return nil, data.BadRequest
 	}
 
 	token, err := middleware.GenerateToken(login.Username, "user")
 	if err != nil {
 		log.Println(err, " usecase/userusecase/post_user_usecase.go:58")
-		return "", data.ErrLogin
+		return nil, data.ErrLogin
 	}
-	return token, data.Success
+	return &responses.UserLogin{
+		Token: token,
+		Username: user.Username,
+		UserInfo: user.UserInfo,
+	}, data.Success
 }
 
 func (t *userHandler) ForgotPassword(username string) error {

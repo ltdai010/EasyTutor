@@ -62,6 +62,28 @@ func (o *UserController) Get() {
 	}
 }
 
+// @Title GetTeacherInfo
+// @Description find object by teacherID
+// @Param	token	header	string	true	"token"
+// @Success 200 {object} responses.Teacher
+// @Failure 403 :teacher_id is empty
+// @router /data/profile/ [get]
+func (o *UserController) GetUserInfo() {
+	username := o.Ctx.Input.Header("username")
+	if username == "" {
+		o.Ctx.Output.SetStatus(400)
+		return
+	}
+	ob, err := userusecase.GetUserUseCase().Profile(username)
+	if myerror.IsError(err) {
+		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
+		return
+	} else {
+		o.Data["json"] = responses.ResponseCommonSingle{Data: ob}
+		o.ServeJSON()
+	}
+}
+
 // @Title ForgotPass
 // @Description create teacher
 // @Param	username		query 	string	true		"The object content"
@@ -168,13 +190,13 @@ func (o *UserController) Login() {
 		o.Ctx.Output.SetStatus(400)
 		return
 	}
-	id, err := userusecase.GetUserUseCase().Login(ob)
+	loginData, err := userusecase.GetUserUseCase().Login(ob)
 	if myerror.IsError(err) {
 		o.Ctx.Output.SetStatus(data.MapErrorCode[err])
 		return
 	}
 	o.Data["json"] = responses.ResponseCommonSingle{
-		Data: id,
+		Data: loginData,
 	}
 	o.ServeJSON()
 }

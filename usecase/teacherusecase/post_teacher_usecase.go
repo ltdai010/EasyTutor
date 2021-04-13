@@ -3,6 +3,7 @@ package teacherusecase
 import (
 	"EasyTutor/data/data"
 	"EasyTutor/data/rest/requests"
+	"EasyTutor/data/rest/responses"
 	"EasyTutor/middleware"
 	"EasyTutor/models"
 	"EasyTutor/utils/logger"
@@ -69,28 +70,32 @@ func (t *teacherHandler) CreateOne(request requests.TeacherPost) (string, error)
 	return id, data.Success
 }
 
-func (t *teacherHandler) Login(login data.LoginInfo) (string, error) {
+func (t *teacherHandler) Login(login data.LoginInfo) (*responses.TeacherLogin, error) {
 	teacher := &models.Teacher{}
 	teacher.Username = login.Username
 
 	err := teacher.Get()
 	if err != nil {
-		return "", data.NotExisted
+		return nil, data.NotExisted
 	}
 
 	if !teacher.Active {
-		return "", data.NotPermission
+		return nil, data.NotPermission
 	}
 
 	if err = bcrypt.CompareHashAndPassword([]byte(teacher.Password), []byte(login.Password)); err != nil {
-		return "", data.BadRequest
+		return nil, data.BadRequest
 	}
 
 	token, err := middleware.GenerateToken(login.Username, "teacher")
 	if err != nil {
-		return "", data.ErrLogin
+		return nil, data.ErrLogin
 	}
-	return token, data.Success
+	return &responses.TeacherLogin{
+		Token:       token,
+		Username:    teacher.Username,
+		TeacherInfo: teacher.TeacherInfo,
+	}, data.Success
 }
 
 func (t *teacherHandler) ForgotPassword(username string) error {

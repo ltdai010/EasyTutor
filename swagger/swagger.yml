@@ -935,6 +935,44 @@ paths:
             $ref: '#/definitions/responses.Comment'
         "403":
           description: :teacher_id is empty
+  /teacher/data/my-offer/:
+    get:
+      tags:
+      - teacher
+      description: find object by objectid
+      operationId: TeacherController.GetOffer
+      parameters:
+      - in: header
+        name: token
+        description: token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/responses.Offer'
+        "403":
+          description: :teacher_id is empty
+  /teacher/data/profile/:
+    get:
+      tags:
+      - teacher
+      description: find object by teacherID
+      operationId: TeacherController.GetTeacherInfo
+      parameters:
+      - in: header
+        name: token
+        description: token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/responses.Teacher'
+        "403":
+          description: :teacher_id is empty
   /teacher/forgot-password:
     post:
       tags:
@@ -970,19 +1008,6 @@ paths:
           description: '{string} id'
         "403":
           description: body is empty
-  /teacher/my-offer:
-    get:
-      tags:
-      - teacher
-      description: find object by objectid
-      operationId: TeacherController.Get
-      responses:
-        "200":
-          description: ""
-          schema:
-            $ref: '#/definitions/responses.Offer'
-        "403":
-          description: :teacher_id is empty
   /teacher/reset-pass:
     post:
       tags:
@@ -1108,6 +1133,25 @@ paths:
             $ref: '#/definitions/responses.User'
         "403":
           description: :user_id is empty
+  /user/data/profile/:
+    get:
+      tags:
+      - user
+      description: find object by teacherID
+      operationId: UserController.GetTeacherInfo
+      parameters:
+      - in: header
+        name: token
+        description: token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/responses.Teacher'
+        "403":
+          description: :teacher_id is empty
   /user/forgot-password:
     post:
       tags:
